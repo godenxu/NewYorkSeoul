@@ -1,0 +1,43 @@
+{
+  "name": "纽约首尔旅行助手",
+  "short_name": "纽首旅行",
+  "description": "2026 纽约 & 首尔十一深度旅行全景总控与行程地图联动手册 (手机便当盒 PWA 版)",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "travel",
+    "navigation",
+    "lifestyle"
+  ]
+}
