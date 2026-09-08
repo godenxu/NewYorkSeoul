@@ -9,19 +9,11 @@
   <meta name="apple-mobile-web-app-title" content="纽首旅行">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
-    <!-- Mobile PWA & iOS Safari Optimized Meta -->
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="纽首旅行">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#0f172a">
   <title>🗽 纽约 & 首尔十一深度旅行 · 全景总控与行程地图联动手册 (全机型自适应重构版)</title>
   <!-- Leaflet CSS -->
   <!-- Inlined Leaflet 1.9.4 CSS for 100% Offline & Apple/Safari Zero-Dependency Loading -->
-  <style id="app-unified-css">
+  <style id="leaflet-inlined-css">
 /* required styles */
 
 
@@ -1345,6 +1337,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	}
 
 
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <style>
     :root {
       --primary: #2563eb;
       --primary-dark: #1d4ed8;
@@ -1419,6 +1414,39 @@ svg.leaflet-image-layer.leaflet-interactive path {
     }
     .header-meta strong { color: #38bdf8; }
     
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-fullscreen {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #f8fafc;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-fullscreen:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #ffffff;
+    }
+    .btn-fullscreen.active {
+      background: #2563eb;
+      border-color: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+    }
     .btn-pwa-install {
       background: rgba(56, 189, 248, 0.2);
       border: 1px solid #38bdf8;
@@ -1484,10 +1512,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       min-height: 0;
       position: relative;
       overflow: hidden;
-      display: none;
+      display: none !important;
     }
     .view-container.active {
-      display: flex;
+      display: flex !important;
       flex-direction: column;
     }
 
@@ -1499,8 +1527,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
       height: 100%;
       min-height: 0;
       position: relative;
-      display: flex;
       flex-direction: column;
+    }
+    #view-split:not(.active) {
+      display: none !important;
+    }
+    #view-split.active {
+      display: flex !important;
     }
 
     /* Persistent View Mode Switcher Toolbar (Top of Split View) */
@@ -1800,9 +1833,47 @@ svg.leaflet-image-layer.leaflet-interactive path {
       overflow-x: auto;
       flex-shrink: 0;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f1f5f9;
     }
-    .day-selector-wrap::-webkit-scrollbar { display: none; }
+    .day-selector-wrap::-webkit-scrollbar {
+      height: 4px;
+    }
+    .day-selector-wrap::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .day-selector-wrap::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .day-selector-wrap::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Horizontal Split: Day 10 & 11 accessible without scrolling */
+    #view-split.mode-split-h .day-selector-wrap {
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 6px 8px;
+      overflow-x: visible;
+    }
+    #view-split.mode-split-h .day-btn {
+      flex: 1 1 calc(16.66% - 5px);
+      min-width: 42px;
+      padding: 3px 4px;
+    }
+    #view-split.mode-split-h .day-btn span.d-num {
+      font-size: 0.72rem;
+    }
+    #view-split.mode-split-h .day-btn span.d-date {
+      font-size: 0.62rem;
+    }
+
+    .place-pill-btn.active-focused {
+      outline: 2px solid #2563eb !important;
+      outline-offset: 1px;
+      box-shadow: 0 0 8px rgba(37,99,235,0.4) !important;
+    }
     .day-btn {
       padding: 4px 9px;
       border-radius: 8px;
@@ -2111,6 +2182,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       align-items: center;
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 5px 8px;
       border-radius: 8px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.12);
@@ -2242,14 +2314,40 @@ svg.leaflet-image-layer.leaflet-interactive path {
       align-items: center;
       gap: 5px;
       backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    /* Map Canvas */
+    /* Map Canvas - Bulletproof Absolute Positioning for Apple iOS Safari WebKit */
     #mapMaster {
-      width: 100%;
-      height: 100%;
-      min-height: 0;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 160px !important;
       background: #f1f5f9;
+      z-index: 1;
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+    }
+
+    /* Apple iOS WebKit Hardware Acceleration and Tile Rendering Fixes */
+    .leaflet-container {
+      -webkit-tap-highlight-color: transparent;
+      width: 100% !important;
+      height: 100% !important;
+      font-family: inherit;
+    }
+    .leaflet-tile-container {
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+    }
+    .leaflet-tile {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     /* CUSTOM LEAFLET MARKERS & PERMANENT LABELS */
@@ -2264,6 +2362,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       gap: 4px;
       background: rgba(15, 23, 42, 0.90);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       padding: 2px 7px 2px 3px;
       border-radius: 999px;
       border: 1.5px solid rgba(255, 255, 255, 0.45);
@@ -2368,6 +2467,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       z-index: 1000;
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-top: 1px solid var(--border);
       box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2579,6 +2679,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       bottom: 0;
       background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       z-index: 999999;
       align-items: center;
       justify-content: center;
@@ -2626,28 +2727,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
       .header-meta { display: none; }
       nav.nav-bar { display: none; } /* Use bottom nav on phone! */
       
-      .header-top {
-        padding: 3px 8px !important;
-        min-height: 34px !important;
-      }
-      .brand-title {
-        font-size: 0.88rem !important;
-        gap: 5px !important;
-      }
-      .brand-tag {
-        font-size: 0.62rem !important;
-        padding: 1px 5px !important;
-      }
-      .view-mode-select {
-        height: 26px !important;
-        font-size: 0.7rem !important;
-        padding: 1px 4px !important;
-      }
-      .btn-fullscreen {
-        height: 26px !important;
-        font-size: 0.7rem !important;
-        padding: 1px 6px !important;
-      }
+      .brand-title { font-size: 0.92rem; }
+      .header-actions { gap: 5px; }
+      .btn-fullscreen { padding: 3px 7px; font-size: 0.72rem; }
+      .btn-fullscreen .fs-text { display: none; }
+      .btn-pwa-install { padding: 3px 7px; font-size: 0.72rem; }
       .pwa-text-full { display: none; }
       .pwa-text-short { display: inline; }
 
@@ -2681,7 +2765,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
         height: var(--bottom-nav-h);
         background: rgba(15, 23, 42, 0.96);
         backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 99999;
         padding-bottom: env(safe-area-inset-bottom);
@@ -2749,360 +2835,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       }
       .brand-title { font-size: 0.96rem; }
     }
-  
-
-
-    /* ========================================================
-       🍱 Bento Box Timeline UI (醒目蓝色时间 + 黑色地点 + 便当盒框)
-       ======================================================== */
-    .bento-box-card {
-      background: #ffffff;
-      border: 1.8px solid #cbd5e1;
-      border-radius: 13px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
-      margin-bottom: 12px;
-      flex-shrink: 0 !important;
-      width: 100%;
-      box-sizing: border-box;
-      overflow: hidden;
-      transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease;
-    }
-    .bento-box-card:hover {
-      border-color: #2563eb;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
-      transform: translateY(-1px);
-    }
-    .bento-header {
-      background: #f8fafc;
-      padding: 10px 14px;
-      border-bottom: 1.5px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-    .bento-header:hover {
-      background: #f1f5f9;
-    }
-    /* 醒目的蓝色时间 (Striking Blue Time Badge) */
-    .bento-time-badge {
-      background: #2563eb;
-      color: #ffffff;
-      font-size: 0.92rem;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 8px;
-      white-space: nowrap;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.28);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      flex-shrink: 0;
-    }
-    .bento-time-icon {
-      font-size: 0.85rem;
-    }
-    /* 醒目的黑色地点 (Prominent Black Place Title) */
-    .bento-place-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.2px;
-      flex: 1;
-      min-width: 140px;
-      word-break: break-word;
-    }
-    /* Bento pin link badge */
-    .bento-pin-btn {
-      background: #ffffff;
-      border: 1.5px solid #94a3b8;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: #1e293b;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      transition: all 0.15s ease;
-      flex-shrink: 0;
-    }
-    .bento-pin-btn:hover {
-      background: #2563eb;
-      color: #ffffff;
-      border-color: #2563eb;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
-      transform: scale(1.03);
-    }
-    .bento-pin-num {
-      background: #0f172a;
-      color: #ffffff;
-      font-size: 0.68rem;
-      font-weight: 900;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .bento-pin-btn:hover .bento-pin-num {
-      background: #ffffff;
-      color: #2563eb;
-    }
-    /* Bento Body & Compartments */
-    .bento-body {
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      flex-shrink: 0;
-      font-size: 0.86rem;
-      line-height: 1.65;
-      color: #334155;
-    }
-    .bento-activity {
-      color: #1e293b;
-      line-height: 1.65;
-      white-space: pre-line;
-      word-break: break-word;
-      font-weight: 500;
-    }
-    .bento-compartment {
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.83rem;
-      line-height: 1.58;
-    }
-    .bento-dining {
-      background: #fff7ed;
-      border: 1px solid #ffedd5;
-      border-left: 4px solid #f97316;
-      color: #9a3412;
-    }
-    .bento-booking {
-      background: #fefce8;
-      border: 1px solid #fef08a;
-      border-left: 4px solid #eab308;
-      color: #854d0e;
-    }
-    .bento-transport {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-left: 4px solid #64748b;
-      color: #475569;
-    }
-    .bento-tips {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-left: 4px solid #22c55e;
-      color: #166534;
-    }
-    .itinerary-end-card {
-      background: #f8fafc;
-      border: 1.5px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 18px;
-      text-align: center;
-      margin: 14px 0 36px 0;
-      flex-shrink: 0 !important;
-    }
-
-
-    /* ========================================================
-       Top Header Compression & View Mode Select Dropdown
-       ======================================================== */
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-    .mode-select-wrap {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-    }
-    .view-mode-select {
-      background: rgba(30, 41, 59, 0.92);
-      color: #f8fafc;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 6px;
-      padding: 3px 8px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      height: 28px;
-      outline: none;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-      transition: all 0.15s ease;
-    }
-    .view-mode-select:focus, .view-mode-select:hover {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
-    }
-    .view-mode-select option {
-      background: #0f172a;
-      color: #f8fafc;
-      font-size: 0.82rem;
-    }
-    .btn-fullscreen {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #f8fafc;
-      border-radius: 6px;
-      padding: 3px 9px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      height: 28px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .btn-fullscreen:hover {
-      background: rgba(56, 189, 248, 0.22);
-      border-color: #38bdf8;
-      color: #38bdf8;
-    }
-
-    /* ========================================================
-       Draggable Splitter Bar (.split-resizer)
-       ======================================================== */
-    .split-resizer {
-      z-index: 45;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: none;
-      flex-shrink: 0;
-      position: relative;
-      background: #e2e8f0;
-      transition: background-color 0.15s ease;
-    }
-    .split-resizer:hover, .split-resizer.dragging {
-      background: #93c5fd;
-    }
-    .split-resizer-handle {
-      background: #64748b;
-      border-radius: 999px;
-      transition: all 0.15s ease;
-      pointer-events: none;
-    }
-    .split-resizer:hover .split-resizer-handle, .split-resizer.dragging .split-resizer-handle {
-      background: #1d4ed8;
-      box-shadow: 0 0 6px rgba(37, 99, 235, 0.6);
-    }
-
-    /* In mode-split-v: Vertical Top Map & Bottom Itinerary */
-    #view-split.mode-split-v .split-map-panel {
-      order: 1;
-      height: var(--map-v-height, 38%);
-      min-height: 80px;
-      max-height: calc(100% - 90px);
-      width: 100%;
-      flex-shrink: 0;
-      border-bottom: none !important;
-    }
-    #view-split.mode-split-v .split-resizer {
-      order: 2;
-      width: 100%;
-      height: 10px;
-      cursor: row-resize;
-      cursor: ns-resize;
-      border-top: 1px solid #cbd5e1;
-      border-bottom: 1px solid #cbd5e1;
-    }
-    #view-split.mode-split-v .split-resizer::before {
-      content: '';
-      position: absolute;
-      top: -8px;
-      bottom: -8px;
-      left: 0;
-      right: 0;
-    }
-    #view-split.mode-split-v .split-resizer-handle {
-      width: 44px;
-      height: 4px;
-    }
-    #view-split.mode-split-v .split-sidebar {
-      order: 3;
-      height: calc(100% - var(--map-v-height, 38%) - 10px);
-      min-height: 90px;
-      width: 100%;
-      flex: 1 1 auto;
-    }
-
-    /* In mode-split-h: Horizontal Left Sidebar & Right Map */
-    #view-split.mode-split-h .split-sidebar {
-      order: 1;
-      width: var(--sidebar-h-width, 44%);
-      min-width: 180px;
-      max-width: calc(100% - 180px);
-      height: 100%;
-      flex-shrink: 0;
-      border-right: none !important;
-    }
-    #view-split.mode-split-h .split-resizer {
-      order: 2;
-      width: 10px;
-      height: 100%;
-      cursor: col-resize;
-      cursor: ew-resize;
-      border-left: 1px solid #cbd5e1;
-      border-right: 1px solid #cbd5e1;
-    }
-    #view-split.mode-split-h .split-resizer::before {
-      content: '';
-      position: absolute;
-      left: -8px;
-      right: -8px;
-      top: 0;
-      bottom: 0;
-    }
-    #view-split.mode-split-h .split-resizer-handle {
-      width: 4px;
-      height: 44px;
-    }
-    #view-split.mode-split-h .split-map-panel {
-      order: 3;
-      width: calc(100% - var(--sidebar-h-width, 44%) - 10px);
-      min-width: 180px;
-      height: 100%;
-      flex: 1 1 auto;
-    }
-
-    /* Hidden in pure itinerary or pure map mode */
-    #view-split.mode-itinerary .split-resizer,
-    #view-split.mode-map .split-resizer {
-      display: none !important;
-    }
-
-    /* Helper while dragging */
-    body.is-resizing {
-      user-select: none !important;
-      -webkit-user-select: none !important;
-      cursor: move;
-    }
-    body.is-resizing #map,
-    body.is-resizing iframe {
-      pointer-events: none !important;
-    }
-
-</style>
+  </style>
 </head>
 <body>
 
@@ -3115,18 +2848,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </div>
       <div class="header-meta">
         <span>📅 2026/10/02 - 10/12 (11天)</span>
-        <span>📍 收藏地点 <strong>243 处</strong> (0 异常)</span>
+        <span>📍 收藏地点 <strong>233 处</strong> (0 异常)</span>
       </div>
       <div class="header-actions">
-        <div class="mode-select-wrap">
-          <select id="viewModeSelect" class="view-mode-select" onchange="setViewSubmode(this.value)" title="切换界面布局模式">
-            <option value="split-v">⬒ 上图下程</option>
-            <option value="split-h">◫ 左右分屏</option>
-            <option value="itinerary">📋 纯日程</option>
-            <option value="map">🗺️ 全景地图</option>
-          </select>
-        </div>
-        <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="全屏查看 (再次点击或按 Esc 退出)">
+        <!-- <button class="btn-pwa-install" onclick="openPwaModal()">
+          <span>📲</span>
+          <span class="pwa-text-full">加到手机桌面/离线</span>
+          <span class="pwa-text-short">离线PWA</span>
+        </button>
+                <!-- <button class="btn-pwa-install" id="btnPwaInstall" onclick="handlePwaInstallAction()" title="安装到手机桌面以全屏离线使用">
+          <span>📲</span>
+          <span class="pwa-text-full">安装应用</span>
+          <span class="pwa-text-short">安装</span>
+        </button>
+        <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="在浏览器中全屏查看 (按 Esc 或再次点击退出)">
           <span id="fsIcon">⛶</span>
           <span class="fs-text" id="fsText">全屏</span>
         </button>
@@ -3164,11 +2899,33 @@ svg.leaflet-image-layer.leaflet-interactive path {
        ======================================================= -->
   <section id="view-split" class="view-container active mode-split-v">
     
-    <!-- Content Area: Map, Resizer Divider, and Sidebar -->
-    <div class="split-content-area" id="splitContentArea">
+    <!-- Multi-Mode Switcher Bar (Supports 4 Modes Everywhere) -->
+    <div class="view-mode-bar">
+      <div class="view-mode-group">
+        <button class="btn-mode-pill active" id="btnModeSplitV" onclick="setViewSubmode('split-v')" title="上图下程上下分屏">
+          <span>⬒</span>
+          <span>上图下程</span>
+        </button>
+        <button class="btn-mode-pill" id="btnModeSplitH" onclick="setViewSubmode('split-h')" title="左右双列分屏">
+          <span>◫</span>
+          <span>左右分屏</span>
+        </button>
+        <button class="btn-mode-pill" id="btnModeItinerary" onclick="setViewSubmode('itinerary')" title="专注纯文本日程">
+          <span>📋</span>
+          <span>纯日程</span>
+        </button>
+        <button class="btn-mode-pill" id="btnModeMap" onclick="setViewSubmode('map')" title="沉浸式全屏地图">
+          <span>🗺️</span>
+          <span>全景地图</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Area: Map and Sidebar -->
+    <div class="split-content-area">
       
       <!-- Itinerary Sidebar Panel -->
-      <div class="split-sidebar" id="splitSidebar">
+      <div class="split-sidebar">
         <!-- 11 Days Carousel Selector -->
         <div class="day-selector-wrap" id="daySelectorWrap">
           <!-- Injected via JS -->
@@ -3195,19 +2952,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
       </div>
 
-      <!-- Draggable Splitter Divider (Touch & Mouse Resizable) -->
-      <div class="split-resizer" id="splitResizer" title="按住拖动调整地图与行程大小" role="separator">
-        <div class="split-resizer-handle"></div>
-      </div>
-
       <!-- Map Panel: Map & Floating Controls -->
-      <div class="split-map-panel" id="splitMapPanel">
+      <div class="split-map-panel">
         <!-- Floating Toolbar on Map -->
         <div class="map-top-bar">
-          <!-- View Mode: Day Route vs All 243 Places -->
+          <!-- View Mode: Day Route vs All 233 Places -->
           <div class="map-mode-toggle">
             <button class="btn-toggle active" id="btnModeDay" onclick="setMapMode('day')">📅 当日</button>
-            <button class="btn-toggle" id="btnModeAll" onclick="setMapMode('all')">🌐 全量243</button>
+            <button class="btn-toggle" id="btnModeAll" onclick="setMapMode('all')">🌐 全量233</button>
           </div>
 
           <!-- City Switch -->
@@ -3246,7 +2998,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
           <!-- Stats & Actions -->
           <div class="map-stats-badge" id="mapStatsBadge">
-            <strong>12</strong> / 243
+            <strong>12</strong> / 233
           </div>
           <button class="btn-fit-bounds" onclick="fitCurrentMarkers()">🎯 聚焦</button>
         </div>
@@ -9220,133 +8972,22 @@ svg.leaflet-image-layer.leaflet-interactive path {
       splitEl.classList.remove('mode-split-v', 'mode-split-h', 'mode-itinerary', 'mode-map');
       splitEl.classList.add('mode-' + submode);
 
-      const sel = document.getElementById('viewModeSelect');
-      if (sel && sel.value !== submode) {
-        sel.value = submode;
-      }
-
       document.querySelectorAll('.btn-mode-pill').forEach(b => b.classList.remove('active'));
-      const pillBtn = document.getElementById({
-        'split-v': 'btnModeSplitV',
-        'split-h': 'btnModeSplitH',
-        'itinerary': 'btnModeItinerary',
-        'map': 'btnModeMap'
-      }[submode]);
-      if (pillBtn) pillBtn.classList.add('active');
+
+      if (submode === 'split-v') {
+        document.getElementById('btnModeSplitV').classList.add('active');
+      } else if (submode === 'split-h') {
+        document.getElementById('btnModeSplitH').classList.add('active');
+      } else if (submode === 'itinerary') {
+        document.getElementById('btnModeItinerary').classList.add('active');
+      } else if (submode === 'map') {
+        document.getElementById('btnModeMap').classList.add('active');
+      }
 
       setTimeout(() => {
         if (map) map.invalidateSize();
-      }, 150);
+      }, 220);
     }
-
-    
-    // ========================================================
-    // Draggable Split Resizer Logic (Touch & Mouse Support)
-    // ========================================================
-    (function initSplitResizer() {
-      const resizer = document.getElementById('splitResizer');
-      const container = document.getElementById('splitContentArea');
-      const mapPanel = document.getElementById('splitMapPanel');
-      const sidebar = document.getElementById('splitSidebar');
-      if (!resizer || !container || !mapPanel || !sidebar) return;
-
-      let isDragging = false;
-      let startCoord = 0;
-      let startDim = 0;
-      let totalDim = 0;
-      let animFrameId = null;
-
-      function getCoords(e) {
-        if (e.touches && e.touches.length > 0) {
-          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        }
-        return { x: e.clientX, y: e.clientY };
-      }
-
-      function onStart(e) {
-        if (currentSubmode !== 'split-v' && currentSubmode !== 'split-h') return;
-        isDragging = true;
-        resizer.classList.add('dragging');
-        document.body.classList.add('is-resizing');
-
-        const coords = getCoords(e);
-        const rect = container.getBoundingClientRect();
-
-        if (currentSubmode === 'split-v') {
-          startCoord = coords.y;
-          startDim = mapPanel.getBoundingClientRect().height;
-          totalDim = rect.height;
-        } else {
-          startCoord = coords.x;
-          startDim = sidebar.getBoundingClientRect().width;
-          totalDim = rect.width;
-        }
-
-        if (e.cancelable && e.type.startsWith('touch')) {
-          e.preventDefault();
-        }
-      }
-
-      function onMove(e) {
-        if (!isDragging) return;
-        const coords = getCoords(e);
-
-        if (animFrameId) cancelAnimationFrame(animFrameId);
-        animFrameId = requestAnimationFrame(() => {
-          if (currentSubmode === 'split-v') {
-            const deltaY = coords.y - startCoord;
-            let newH = startDim + deltaY;
-            const minH = 70;
-            const maxH = totalDim - 90;
-            newH = Math.max(minH, Math.min(maxH, newH));
-            const pct = (newH / totalDim) * 100;
-            container.style.setProperty('--map-v-height', pct.toFixed(2) + '%');
-            try { localStorage.setItem('trip_map_v_pct', pct.toFixed(2)); } catch(err) {}
-          } else if (currentSubmode === 'split-h') {
-            const deltaX = coords.x - startCoord;
-            let newW = startDim + deltaX;
-            const minW = 160;
-            const maxW = totalDim - 160;
-            newW = Math.max(minW, Math.min(maxW, newW));
-            const pct = (newW / totalDim) * 100;
-            container.style.setProperty('--sidebar-h-width', pct.toFixed(2) + '%');
-            try { localStorage.setItem('trip_sidebar_h_pct', pct.toFixed(2)); } catch(err) {}
-          }
-          if (map) map.invalidateSize();
-        });
-
-        if (e.cancelable && e.type.startsWith('touch')) {
-          e.preventDefault();
-        }
-      }
-
-      function onEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-        resizer.classList.remove('dragging');
-        document.body.classList.remove('is-resizing');
-        setTimeout(() => {
-          if (map) map.invalidateSize();
-        }, 60);
-      }
-
-      resizer.addEventListener('mousedown', onStart);
-      window.addEventListener('mousemove', onMove, { passive: false });
-      window.addEventListener('mouseup', onEnd);
-
-      resizer.addEventListener('touchstart', onStart, { passive: false });
-      window.addEventListener('touchmove', onMove, { passive: false });
-      window.addEventListener('touchend', onEnd);
-      window.addEventListener('touchcancel', onEnd);
-
-      // Restore saved proportions
-      try {
-        const savedV = localStorage.getItem('trip_map_v_pct');
-        if (savedV) container.style.setProperty('--map-v-height', savedV + '%');
-        const savedH = localStorage.getItem('trip_sidebar_h_pct');
-        if (savedH) container.style.setProperty('--sidebar-h-width', savedH + '%');
-      } catch(err) {}
-    })();
 
     // Render 11 Days Selector
     function renderDaySelectors() {
@@ -9457,13 +9098,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
       let html = '';
 
       // 日落 / 假日提示条
-      if (day.sun && day.sun !== '—') {
-        const isHoliday = day.sun.indexOf('🎌') >= 0;
+      if (day.sun && day.sun !== '\u2014') {
+        const isHoliday = day.sun.indexOf('\ud83c\udf8c') >= 0;
         html += `
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:9px 13px;border-radius:10px;
-                      background:${isHoliday ? '#fef3c7' : '#eff6ff'};border-left:4px solid ${isHoliday ? '#f59e0b' : '#3b82f6'};
-                      font-size:0.83rem;font-weight:700;color:${isHoliday ? '#92400e' : '#1e40af'};box-shadow:0 1px 3px rgba(0,0,0,0.03);flex-shrink:0;">
-            <span>☀️</span><span>${day.sun}</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px;padding:8px 12px;border-radius:9px;
+                      background:${isHoliday ? '#fef3c7' : '#f1f5f9'};border-left:4px solid ${isHoliday ? '#f59e0b' : '#64748b'};
+                      font-size:0.82rem;font-weight:700;color:${isHoliday ? '#92400e' : '#334155'};">
+            <span>\u2600\ufe0f</span><span>${day.sun}</span>
           </div>
         `;
       }
@@ -9486,50 +9127,48 @@ svg.leaflet-image-layer.leaflet-interactive path {
         p.seqNum = idx + 1;
       });
 
-      // Bento Box Timeline Cards
-      (day.blocks || []).forEach((b, bIdx) => {
-        const timeText = b.time || b.time_period || '特定时段';
-        const placeText = b.place || b.title || '行程打卡点';
-        
-        // Find matched place for this block
-        let matchedPlace = null;
-        if (b.place_id) {
-          matchedPlace = dayPinPlaces.find(p => p.id === b.place_id);
-        }
-        if (!matchedPlace) {
-          const blockSearch = ((b.place || '') + ' ' + (b.title || '') + ' ' + (b.activity || '')).toLowerCase();
-          matchedPlace = dayPinPlaces.find(p => {
-            const aliases = (PLACE_ALIASES && PLACE_ALIASES[p.id]) ? PLACE_ALIASES[p.id] : [p.title];
-            return aliases.some(a => blockSearch.includes(a.toLowerCase()));
-          });
-        }
+      // Top summary card removed per user request (places embedded in itinerary timeline)
 
-        const decoratedAct = decorateActivityWithPills(b.activity || '', dayPinPlaces);
-        const decoratedDining = decorateActivityWithPills(b.dining || '', dayPinPlaces);
-        const decoratedTips = decorateActivityWithPills(b.tips || '', dayPinPlaces);
+      // 2. Timeline Blocks
+      day.blocks.forEach(b => {
+        // Find which pins belong to this block
+        const blockText = ((b.title || '') + ' ' + (b.activity || '') + ' ' + (b.dining || '') + ' ' + (b.transport || '') + ' ' + (b.tips || '')).toLowerCase();
+        const blockPins = dayPinPlaces.filter(p => {
+          const aliases = (PLACE_ALIASES && PLACE_ALIASES[p.id]) ? PLACE_ALIASES[p.id] : [p.title];
+          return aliases.some(a => blockText.includes(a.toLowerCase()));
+        });
+
+        const decoratedAct = decorateActivityWithPills(b.activity, dayPinPlaces);
+        const decoratedDining = decorateActivityWithPills(b.dining, dayPinPlaces);
+        const decoratedTips = decorateActivityWithPills(b.tips, dayPinPlaces);
 
         html += `
-          <div class="bento-box-card" id="bento-node-${bIdx}">
-            <div class="bento-header" onclick="${matchedPlace ? `focusMapPlace(${matchedPlace.id})` : ''}">
-              <div class="bento-time-badge">
-                <span class="bento-time-icon">🕒</span>
-                <span class="bento-time-text">${timeText}</span>
-              </div>
-              <div class="bento-place-title">${placeText}</div>
-              ${matchedPlace ? `
-                <span class="bento-pin-btn cat-${matchedPlace.cat_key}" onclick="event.stopPropagation(); focusMapPlace(${matchedPlace.id})" title="在地图上定位图钉 #${matchedPlace.seqNum}">
-                  <span class="bento-pin-num">${matchedPlace.seqNum}</span>
-                  <span class="bento-pin-icon">${matchedPlace.icon}</span>
-                  <span class="bento-pin-name">${matchedPlace.title}</span>
-                </span>
-              ` : ''}
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <span class="time-badge">${b.time_period || '特定时段'}</span>
+              <span class="block-title">${b.title}</span>
             </div>
-            <div class="bento-body">
-              ${decoratedAct ? `<div class="bento-activity">${decoratedAct}</div>` : ''}
-              ${b.dining ? `<div class="bento-compartment bento-dining">🍽️ <strong>美食餐饮：</strong><br>${decoratedDining}</div>` : ''}
-              ${b.booking ? `<div class="bento-compartment bento-booking">🎟️ <strong>预约抢票：</strong><br>${b.booking}</div>` : ''}
-              ${b.transport ? `<div class="bento-compartment bento-transport">🚇 <strong>交通指引：</strong><br>${b.transport}</div>` : ''}
-              ${b.tips ? `<div class="bento-compartment bento-tips">💡 <strong>贴士提醒：</strong><br>${decoratedTips}</div>` : ''}
+            <div class="timeline-body">
+              ${blockPins.length > 0 ? `
+                <div class="block-pin-row">
+                  <span class="pin-row-label">📍 本时段途经点位 (地图图钉)：</span>
+                  <div class="block-pin-pills">
+                    ${blockPins.map(p => `
+                      <span class="place-pill-btn pill-place-${p.id} cat-${p.cat_key} ${p.note ? 'is-wish' : ''}" onclick="focusMapPlace(${p.id})" title="点击定位地图图钉 #${p.seqNum}">
+                        <span class="pill-num">${p.seqNum}</span>
+                        <span class="pill-icon">${p.icon}</span>
+                        <span class="pill-title">${p.title}</span>
+                        ${p.note ? '<span class="pill-star">★</span>' : ''}
+                      </span>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+              <div class="activity-text">${decoratedAct}</div>
+              ${b.dining ? `<div class="dining-box">🍽️ <strong>餐饮规划：</strong><br>${decoratedDining}</div>` : ''}
+              ${b.transport ? `<div class="transport-box">🚇 <strong>交通指引与耗时：</strong><br>${b.transport}</div>` : ''}
+              ${b.booking ? `<div class="alert-box">${b.booking}</div>` : ''}
+              ${b.tips ? `<div class="tips-box">💡 <strong>出行避坑与缓冲：</strong>${decoratedTips}</div>` : ''}
             </div>
           </div>
         `;
@@ -9538,9 +9177,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       // End of Day Card
       html += `
         <div class="itinerary-end-card">
-          <div style="font-size:1.3rem;margin-bottom:3px;">🏁</div>
-          <div style="font-weight:800;font-size:0.86rem;color:#1e293b;">Day ${day.day_num} 全部便当盒行程已阅览完毕</div>
-          <div style="font-size:0.75rem;color:#64748b;margin-top:2px;">点击上方日期胶囊可无缝切换至下一日</div>
+          <div style="font-size:1.2rem;margin-bottom:2px;">🏁</div>
+          <div style="font-weight:800;font-size:0.84rem;color:#334155;">Day ${day.day_num} 全部行程与规划已阅览完毕</div>
+          <div style="font-size:0.72rem;color:#64748b;margin-top:2px;">点击上方日期胶囊可无缝切换至下一日</div>
         </div>
       `;
 
@@ -10077,11 +9716,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       renderDaySelectors();
       initMasterMap();
       setViewSubmode(initialSubmode);
-      const urlParams = new URLSearchParams(window.location.search);
-      const dayParam = parseInt(urlParams.get('day') || window.location.hash.replace(/\D/g, ''), 10);
-      const initialDay = (dayParam >= 1 && dayParam <= ITINERARY_DAYS.length) ? dayParam : 1;
-      const initialBtn = document.querySelectorAll('.day-btn')[initialDay - 1] || document.querySelector('.day-btn');
-      selectDay(initialDay, initialBtn);
+      selectDay(1, document.querySelector('.day-btn'));
       renderChecklist();
       renderDiningTable();
       renderUserNotesCards();
@@ -10100,15 +9735,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
       });
     });
   </script>
-
-  
-    </div>
-    <div style="display:flex;gap:8px;align-items:center;">
-      <button onclick="handlePwaInstallAction()" style="background:#38bdf8;color:#0f172a;font-weight:800;border:none;padding:6px 14px;border-radius:8px;font-size:0.82rem;cursor:pointer;box-shadow:0 2px 8px rgba(56,189,248,0.4);">立即安装</button>
-      <button onclick="dismissPwaBanner()" style="background:transparent;border:none;color:#94a3b8;font-size:1.2rem;cursor:pointer;padding:0 4px;">×</button>
-    </div>
-  </div>
-
 
   <!-- iOS Safari Add to Home Screen Guide Modal -->
   <div id="iosPwaModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,0.75);backdrop-filter:blur(6px);z-index:99999;align-items:center;justify-content:center;padding:20px;">
