@@ -2626,7 +2626,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
       .header-meta { display: none; }
       nav.nav-bar { display: none; } /* Use bottom nav on phone! */
       
-      .brand-title { font-size: 0.92rem; }
+      .header-top {
+        padding: 3px 8px !important;
+        min-height: 34px !important;
+      }
+      .brand-title {
+        font-size: 0.88rem !important;
+        gap: 5px !important;
+      }
+      .brand-tag {
+        font-size: 0.62rem !important;
+        padding: 1px 5px !important;
+      }
+      .view-mode-select {
+        height: 26px !important;
+        font-size: 0.7rem !important;
+        padding: 1px 4px !important;
+      }
+      .btn-fullscreen {
+        height: 26px !important;
+        font-size: 0.7rem !important;
+        padding: 1px 6px !important;
+      }
       .pwa-text-full { display: none; }
       .pwa-text-short { display: inline; }
 
@@ -2895,6 +2916,192 @@ svg.leaflet-image-layer.leaflet-interactive path {
       flex-shrink: 0 !important;
     }
 
+
+    /* ========================================================
+       Top Header Compression & View Mode Select Dropdown
+       ======================================================== */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .mode-select-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .view-mode-select {
+      background: rgba(30, 41, 59, 0.92);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      height: 28px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: all 0.15s ease;
+    }
+    .view-mode-select:focus, .view-mode-select:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+    }
+    .view-mode-select option {
+      background: #0f172a;
+      color: #f8fafc;
+      font-size: 0.82rem;
+    }
+    .btn-fullscreen {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f8fafc;
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      height: 28px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-fullscreen:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* ========================================================
+       Draggable Splitter Bar (.split-resizer)
+       ======================================================== */
+    .split-resizer {
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+      flex-shrink: 0;
+      position: relative;
+      background: #e2e8f0;
+      transition: background-color 0.15s ease;
+    }
+    .split-resizer:hover, .split-resizer.dragging {
+      background: #93c5fd;
+    }
+    .split-resizer-handle {
+      background: #64748b;
+      border-radius: 999px;
+      transition: all 0.15s ease;
+      pointer-events: none;
+    }
+    .split-resizer:hover .split-resizer-handle, .split-resizer.dragging .split-resizer-handle {
+      background: #1d4ed8;
+      box-shadow: 0 0 6px rgba(37, 99, 235, 0.6);
+    }
+
+    /* In mode-split-v: Vertical Top Map & Bottom Itinerary */
+    #view-split.mode-split-v .split-map-panel {
+      order: 1;
+      height: var(--map-v-height, 38%);
+      min-height: 80px;
+      max-height: calc(100% - 90px);
+      width: 100%;
+      flex-shrink: 0;
+      border-bottom: none !important;
+    }
+    #view-split.mode-split-v .split-resizer {
+      order: 2;
+      width: 100%;
+      height: 10px;
+      cursor: row-resize;
+      cursor: ns-resize;
+      border-top: 1px solid #cbd5e1;
+      border-bottom: 1px solid #cbd5e1;
+    }
+    #view-split.mode-split-v .split-resizer::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+    }
+    #view-split.mode-split-v .split-resizer-handle {
+      width: 44px;
+      height: 4px;
+    }
+    #view-split.mode-split-v .split-sidebar {
+      order: 3;
+      height: calc(100% - var(--map-v-height, 38%) - 10px);
+      min-height: 90px;
+      width: 100%;
+      flex: 1 1 auto;
+    }
+
+    /* In mode-split-h: Horizontal Left Sidebar & Right Map */
+    #view-split.mode-split-h .split-sidebar {
+      order: 1;
+      width: var(--sidebar-h-width, 44%);
+      min-width: 180px;
+      max-width: calc(100% - 180px);
+      height: 100%;
+      flex-shrink: 0;
+      border-right: none !important;
+    }
+    #view-split.mode-split-h .split-resizer {
+      order: 2;
+      width: 10px;
+      height: 100%;
+      cursor: col-resize;
+      cursor: ew-resize;
+      border-left: 1px solid #cbd5e1;
+      border-right: 1px solid #cbd5e1;
+    }
+    #view-split.mode-split-h .split-resizer::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      right: -8px;
+      top: 0;
+      bottom: 0;
+    }
+    #view-split.mode-split-h .split-resizer-handle {
+      width: 4px;
+      height: 44px;
+    }
+    #view-split.mode-split-h .split-map-panel {
+      order: 3;
+      width: calc(100% - var(--sidebar-h-width, 44%) - 10px);
+      min-width: 180px;
+      height: 100%;
+      flex: 1 1 auto;
+    }
+
+    /* Hidden in pure itinerary or pure map mode */
+    #view-split.mode-itinerary .split-resizer,
+    #view-split.mode-map .split-resizer {
+      display: none !important;
+    }
+
+    /* Helper while dragging */
+    body.is-resizing {
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      cursor: move;
+    }
+    body.is-resizing #map,
+    body.is-resizing iframe {
+      pointer-events: none !important;
+    }
+
 </style>
 </head>
 <body>
@@ -2911,12 +3118,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <span>📍 收藏地点 <strong>243 处</strong> (0 异常)</span>
       </div>
       <div class="header-actions">
-                <button class="btn-pwa-install" id="btnPwaInstall" onclick="handlePwaInstallAction()" title="安装到手机桌面以全屏离线使用">
-          <span>📲</span>
-          <span class="pwa-text-full">安装应用</span>
-          <span class="pwa-text-short">安装</span>
-        </button>
-        <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="在浏览器中全屏查看 (按 Esc 或再次点击退出)">
+        <div class="mode-select-wrap">
+          <select id="viewModeSelect" class="view-mode-select" onchange="setViewSubmode(this.value)" title="切换界面布局模式">
+            <option value="split-v">⬒ 上图下程</option>
+            <option value="split-h">◫ 左右分屏</option>
+            <option value="itinerary">📋 纯日程</option>
+            <option value="map">🗺️ 全景地图</option>
+          </select>
+        </div>
+        <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="全屏查看 (再次点击或按 Esc 退出)">
           <span id="fsIcon">⛶</span>
           <span class="fs-text" id="fsText">全屏</span>
         </button>
@@ -2954,33 +3164,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
        ======================================================= -->
   <section id="view-split" class="view-container active mode-split-v">
     
-    <!-- Multi-Mode Switcher Bar (Supports 4 Modes Everywhere) -->
-    <div class="view-mode-bar">
-      <div class="view-mode-group">
-        <button class="btn-mode-pill active" id="btnModeSplitV" onclick="setViewSubmode('split-v')" title="上图下程上下分屏">
-          <span>⬒</span>
-          <span>上图下程</span>
-        </button>
-        <button class="btn-mode-pill" id="btnModeSplitH" onclick="setViewSubmode('split-h')" title="左右双列分屏">
-          <span>◫</span>
-          <span>左右分屏</span>
-        </button>
-        <button class="btn-mode-pill" id="btnModeItinerary" onclick="setViewSubmode('itinerary')" title="专注纯文本日程">
-          <span>📋</span>
-          <span>纯日程</span>
-        </button>
-        <button class="btn-mode-pill" id="btnModeMap" onclick="setViewSubmode('map')" title="沉浸式全屏地图">
-          <span>🗺️</span>
-          <span>全景地图</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Content Area: Map and Sidebar -->
-    <div class="split-content-area">
+    <!-- Content Area: Map, Resizer Divider, and Sidebar -->
+    <div class="split-content-area" id="splitContentArea">
       
       <!-- Itinerary Sidebar Panel -->
-      <div class="split-sidebar">
+      <div class="split-sidebar" id="splitSidebar">
         <!-- 11 Days Carousel Selector -->
         <div class="day-selector-wrap" id="daySelectorWrap">
           <!-- Injected via JS -->
@@ -3007,8 +3195,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
       </div>
 
+      <!-- Draggable Splitter Divider (Touch & Mouse Resizable) -->
+      <div class="split-resizer" id="splitResizer" title="按住拖动调整地图与行程大小" role="separator">
+        <div class="split-resizer-handle"></div>
+      </div>
+
       <!-- Map Panel: Map & Floating Controls -->
-      <div class="split-map-panel">
+      <div class="split-map-panel" id="splitMapPanel">
         <!-- Floating Toolbar on Map -->
         <div class="map-top-bar">
           <!-- View Mode: Day Route vs All 243 Places -->
@@ -3179,7 +3372,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
               <p style="margin-top:3px;color:#92400e;">绝大多数商户支持信用卡，但<strong>布鲁克林 Peter Luger 牛排硬性规定只收现金 (Cash) 或美国借记卡</strong>！请务必提前准备至少 $250-$350 美金现金。</p>
             </div>
             <div style="background:#fdf4ff;padding:10px 12px;border-radius:8px;border-left:4px solid #c026d3;">
-              <strong>🚕 机场接送交通（已按实际机票更正）：</strong>
+              <strong>🚕 机场接送交通指引：</strong>
               <p style="margin-top:3px;color:#701a75;"><strong>10/02 抵达是 JFK（不是 LGA）17:30 落地</strong>，美国海关已在底特律完成，此段为国内到达，只需取行李。周五晚高峰 JFK→中城车程 60-75 分钟，约 $85-110，实际 19:15-19:30 才到酒店。</p>
               <p style="margin-top:6px;color:#701a75;"><strong>⚠️ 10/07 出发是纽瓦克 EWR（不是 JFK！）08:30 起飞</strong>。EWR 在新泽西，与 JFK 完全相反方向。需 04:45 起床、05:15 出发（车程 35-45 分钟，约 $80-110 含隧道费），并<strong>务必在 10/06 当晚 21:00 前用 Uber/Lyft 预约好次日凌晨的车</strong>。</p>
             </div>
@@ -3208,30 +3401,78 @@ svg.leaflet-image-layer.leaflet-interactive path {
         </div>
       </div>
       <div class="card" style="margin-top:14px;">
-        <div class="card-header" style="background:#7c2d12;color:white;">
-          <div class="card-title" style="color:white;">🅢 周末与节假日人流排期（v4 核心）</div>
+        <div class="card-header" style="background:#1e3a8a;color:white;">
+          <div class="card-title" style="color:white;">🗓️ 每日游览主题与错峰安排全览</div>
         </div>
         <div class="card-body" style="font-size:0.84rem;line-height:1.6;">
-          <p style="margin-bottom:8px;color:#475569;">纽约 4 个整天只有<strong>周一、周二 2 个平日</strong>；首尔 4 个整天只有<strong>周一（返程日）</strong>是平日，周五还是韩文日法定假日。所以这不是「避开人流」，而是「把哪几组内容放到平日」的取舍。</p>
-          <div style="background:#f8fafc;border-left:4px solid #7c2d12;padding:9px 12px;border-radius:8px;margin-bottom:10px;">
-            <strong>判断标准：不看绝对人数，看「人多是否会真的挡住你」</strong>
-            <p style="margin-top:4px;color:#475569;">露天排队类（渡轮安检 / 网红机位 / 餐厅等位）周末影响<strong>致命</strong>，排队可差 2-4 倍且无法绕过 → 必须占平日；预约时段制（博物馆 / 观景台 / Edge）人再多也保证进得去 → 放周末；窄通道类（切尔西市场 / 高线）→ 压缩内容。</p>
-          </div>
+          <p style="margin-bottom:8px;color:#475569;">纽约与首尔双城深度旅行日程已做全流程错峰设计。露天排队、景观大桥与热门买手店全部安排在工作日，室内艺术殿堂与高承载商圈安排在周末，确保游玩体验丝滑无阻。</p>
           <div style="overflow-x:auto;">
           <table style="width:100%;border-collapse:collapse;font-size:0.78rem;min-width:720px;">
-            <thead><tr style="background:#7c2d12;color:#fff;">
+            <thead><tr style="background:#1e3a8a;color:#fff;">
               <th style="padding:7px 8px;text-align:left;">城市</th>
-              <th style="padding:7px 8px;text-align:left;">内容组</th>
-              <th style="padding:7px 8px;text-align:left;">原定</th>
-              <th style="padding:7px 8px;text-align:left;">改为</th>
-              <th style="padding:7px 8px;text-align:left;">理由</th>
+              <th style="padding:7px 8px;text-align:left;">日期与星期</th>
+              <th style="padding:7px 8px;text-align:left;">核心游览内容组</th>
+              <th style="padding:7px 8px;text-align:left;">错峰游玩优势与核心策略</th>
             </tr></thead>
-            <tbody><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>自由女神登岛 + 金融区 + DUMBO + 布鲁克林大桥</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周六 10/03</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>⭐ 周一 10/05</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>官方指南：周末与平日人流不在一个量级。周六安检旺季 60-90 分钟，周一 15-25 分钟；DUMBO 机位周六排队轮流站位，周一随到随拍；大桥周六日落是一堵人墙</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>SoHo 扫街 + 下东区 Katz's + SUMMIT</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周二 10/06</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>周二 10/06（不变）</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>Katz's 周末排 45-60 分钟、周二只要 10-15 分钟，是全程排队差距最大的一家；SoHo 周六是纽约最挤的商业街之一</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>大都会 + 中央公园 + 第五大道 + MoMA + 洛克菲勒</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周日 10/04</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>周六 10/03</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>全部为预约时段制，人再多也保证进得去，是四天里最抗人流的一组；且避开了大都会全周最挤的周日</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>Vessel + Edge + 高线 + 切尔西市场 + 西村</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周一 10/05</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>周日 10/04</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周六比周日更挤；且本日核心 Edge/Peak 是预约制不受影响，切尔西市场可以「只买曲奇不吃正餐」被压缩掉 —— 是唯一能靠调整内容化解周末人流的一天</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>景福宫韩服 + 土俗村 + 北村 + 仁寺洞 + MMCA</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>🎌 周五 10/09 韩文日</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>周日 10/11</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>整个首尔段最怕节假日的一组：韩文日当天宫殿常有免费开放与庆典，本地人举家出游，韩服店好款式一早被挑光，土俗村队伍排到街上</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>Leeum + 汉南洞买手街 + 明洞扫货 + 德寿宫</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周日 10/11</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>🎌 周五 10/09 韩文日</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>汉南洞是小众高端使馆区（假日增幅有限），明洞是外国游客主导商圈（韩国人放假对它影响很小）—— 四天里最「抗假期」的组合</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>圣水洞潮流旗舰（15 处收藏点）</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周六 10/10</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>⭐ 周一 10/12</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周六 + 连假是圣水洞全年最挤的组合，emis / Rockfish 等断货王店铺需在门口平板取号候补，等位 30-40 分钟；周一基本随到随进</td></tr><tr><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>弘大 + 延南洞 + 梨花女大</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#94a3b8;white-space:nowrap;text-decoration:line-through;'>周一 10/12</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#b91c1c;font-weight:800;white-space:nowrap;'>周六 10/10</td><td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>只有 3 处收藏点，且弘大的看点本就是街头气氛与街头表演，周六反而是它最好的一天；梨大校园周末更安静</td></tr></tbody>
+            <tbody>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#1e40af;'>Day 2 · 10/03 (周六)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>大都会 + 中央公园 + 麦迪逊名店 + 纪伊国屋 + Strip House</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>以预约时段制为主，大都会周六延时开放至 21:00，夜游体验极佳</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#1e40af;'>Day 3 · 10/04 (周日)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>特朗普大厦 + LV 巨型硬箱 + Bergdorf + MoMA + 洛克菲勒日落</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>中城经典建筑轴线，室内艺术展与天际线观景台时段预约保障畅行</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#1e40af;'>Day 4 · 10/05 (周一)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>Vessel + Edge + 高线公园 + 切尔西市场 + 西村 + SoHo 扫街</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周一平日错峰极佳，高线公园与切尔西市场人流适中，西村漫步悠闲从容</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>纽约</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#1e40af;'>Day 5 · 10/06 (周二)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>DUMBO + 步行布鲁克林大桥 + 华尔街铜牛 + 9/11 归零地 + 威廉斯堡</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周二绝佳避峰！DUMBO 网红机位拍照从容，大桥人流适度，归零地避开周末长龙</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f766e;'>Day 8 · 10/09 (周五 韩文日)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>汉南洞晨咖 + Leeum 美术馆 + 汉南买手街 + 乐天总店 & 明洞 + 德寿宫</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>汉南洞高端使馆区与明洞国际商圈假日承载力高，受韩国本土假期出游影响小</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f766e;'>Day 9 · 10/10 (周六)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>弘大延南洞晨漫 + 梨花女大 + 江南狎鸥亭岛山公园 + 名人里脊韩牛</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周六弘大青春市集与街头艺人氛围最佳；午后跨城前往江南潮流腹地体验顶尖韩牛</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f766e;'>Day 10 · 10/11 (周日)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>西村 + 景福宫韩服 + 土俗村 + 北村 + MMCA 现代美术馆 + On 6.5</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>传统文化黄金动线，一早探访景福宫避开日间旅行团，品尝参鸡汤与创意泡菜料理</td>
+              </tr>
+              <tr>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;white-space:nowrap;font-weight:700;'>首尔</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f766e;'>Day 11 · 10/12 (周一)</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>⭐ 圣水洞潮流全天深度探索 (Dior/买手店/排骨汤) + 仁川机场返程</td>
+                <td style='padding:6px 8px;border-bottom:1px solid #e2e8f0;'>周一平日圣水洞最松动！排队王店铺随到随进，避开周末 30-40 分钟等号长龙</td>
+              </tr>
+            </tbody>
           </table>
           </div>
-          <div style="margin-top:12px;background:#fffbeb;border-left:4px solid #f59e0b;padding:10px 12px;border-radius:8px;">
-            <strong style="color:#92400e;">⚠️ 三处必须知道的代价</strong>
-            <ol style="margin:6px 0 0 18px;color:#92400e;"><li style='margin-top:4px;'><strong>Jane's Carousel 10/05 周一闭园</strong> —— 秋季只开周四至周日 11:00-17:50，当天只能从玻璃亭外拍照，不能乘坐。若您更看重乘坐，可把 DUMBO 半天挪回周日下午。</li><li style='margin-top:4px;'><strong>10/10 周六需从弘大跨城到狎鸥亭</strong> —— 地铁 2 号线转 3 号线约 40 分钟，是本次调整唯一新增的一段折返。</li><li style='margin-top:4px;'><strong>圣水洞部分店铺周一休业</strong> —— 需出发前用 Naver Map 逐家确认；行李只能寄存旅舍，不能存在机场铁路沿线车站。</li></ol>
+          <div style="margin-top:12px;background:#eff6ff;border-left:4px solid #2563eb;padding:10px 12px;border-radius:8px;">
+            <strong style="color:#1e40af;">💡 游玩关键提示</strong>
+            <ol style="margin:6px 0 0 18px;color:#1e40af;">
+              <li style='margin-top:4px;'><strong>Jane's Carousel 旋转木马</strong>：秋季开放时间为周四至周日，周一在透明玻璃亭外观景拍照，打卡布鲁克林大桥经典框景。</li>
+              <li style='margin-top:4px;'><strong>10/10 跨城交通指引</strong>：弘大延南洞游览完毕后，搭乘地铁 2 号线转 3 号线直达江南狎鸥亭，车程约 40 分钟。</li>
+              <li style='margin-top:4px;'><strong>10/12 圣水洞探店与行李</strong>：部分个性小众买手店周一可能轮休，出发前建议通过 Naver Map 确认营业时间；行李统一寄存于九树酒店前台。</li>
+            </ol>
           </div>
         </div>
       </div>
@@ -3247,7 +3488,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <!-- NYC Hotel -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">🗽 纽约既定住宿详情</div>
+            <div class="card-title">🗽 纽约住宿详情</div>
           </div>
           <div class="card-body" style="font-size:0.86rem;line-height:1.6;">
             <h3 style="color:#1e3a8a;font-size:0.95rem;margin-bottom:6px;">TownePlace Suites Times Square</h3>
@@ -3261,14 +3502,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <!-- Seoul Hotel -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">🇰🇷 首尔既定住宿详情</div>
+            <div class="card-title">🇰🇷 首尔住宿详情</div>
           </div>
           <div class="card-body" style="font-size:0.86rem;line-height:1.6;">
-            <h3 style="color:#0f766e;font-size:0.95rem;margin-bottom:6px;">Momento Hostel (钟路/清溪川)</h3>
-            <p>📍 <strong>详细地址</strong>：52 Samil-daero 17-gil, Jongno District, Seoul</p>
-            <p>🏨 <strong>位置优势</strong>：紧邻清溪川，下楼即是散步道；向南步行 5 分钟达明洞与乙支路美食街；提供免费轻早餐。</p>
-            <p>🚇 <strong>交通接驳</strong>：地铁 2/3 号线「乙支路3街站」及 1/3/5 号线「钟路3街站」。</p>
-            <p>🛒 <strong>超市补给</strong>：楼下 50m 便利店，200m Olive Young 钟路店，700m 乐天百货食品生活超市。</p>
+            <h3 style="color:#0f766e;font-size:0.95rem;margin-bottom:6px;">Nine Tree Premier Hotel Insadong (首尔九树仁寺洞精品酒店)</h3>
+            <p>📍 <strong>详细地址</strong>：49 Insadong-gil, Jongno-gu, Seoul (钟路区仁寺洞街49)</p>
+            <p>🏨 <strong>位置优势</strong>：仁寺洞核心文化商圈，下楼即是特色街区；步行轻松漫步至安国站、北村与清溪川；高品质国际化精品酒店，环境静谧舒适。</p>
+            <p>🚇 <strong>交通接驳</strong>：紧邻地铁 3 号线「安国站」6号口（步行约 3 分钟），步行 6 分钟即达 1/3/5 号线「钟路3街站」，四通八达。</p>
+            <p>🛒 <strong>周边配套</strong>：周边咖啡名店、潮流买手店云集，下楼即有便利店与 Olive Young，前台提供免费行李寄存服务。</p>
           </div>
         </div>
       </div>
@@ -3291,19 +3532,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
           </table>
           </div>
           <div style="margin-top:12px;background:#fef2f2;border-left:4px solid #ef4444;padding:10px 12px;border-radius:8px;">
-            <strong style="color:#991b1b;">⚠️ 三处与原计划不同、最容易出错的地方</strong>
-            <p style="margin-top:5px;color:#991b1b;">① <strong>10/02 抵达的是 JFK，不是 LGA</strong>；17:30 落地，实际 19:15-19:30 才到酒店，当晚不排任何硬预约。</p>
-            <p style="margin-top:5px;color:#991b1b;">② <strong>10/07 从纽瓦克 EWR 出发，不是 JFK</strong>；08:30 起飞，04:45 起床、05:15 出发，前一晚务必预约好车。</p>
-            <p style="margin-top:5px;color:#991b1b;">③ <strong>10/12 返程 22:30 从仁川 T1 出发</strong>（易斯达航空），与 10/08 抵达的 T2 不是同一栋楼；全天可自由活动。</p>
+            <strong style="color:#991b1b;">⚠️ 三处关键交通与枢纽防错提示</strong>
+            <p style="margin-top:5px;color:#991b1b;">① <strong>10/02 抵达纽约肯尼迪国际机场 JFK (DL2934 17:30落地)</strong>：此段为国内到达（入境手续已在底特律中转办结），提取行李后乘车，预计 19:15-19:30 抵达曼哈顿酒店，当晚轻松夜步时代广场，及早倒时差休息。</p>
+            <p style="margin-top:5px;color:#991b1b;">② <strong>10/07 纽瓦克 EWR 机场出发 (DL2365 08:30起飞)</strong>：EWR 位于新泽西，需 04:45 起床、05:15 出发，请务必在 10/06 晚间 21:00 前用网约车平台预约好次日清晨送机车辆。</p>
+            <p style="margin-top:5px;color:#991b1b;">③ <strong>10/12 首尔返程仁川机场 T1 航站楼出发 (ZE871 22:30起飞)</strong>：易斯达航空航站楼为 T1，与抵韩时的 T2 不同；当日全天可在圣水洞轻松游玩，傍晚统一取行李前往首尔站搭乘 AREX 直通列车。</p>
           </div>
           <div style="margin-top:12px;background:#f0fdfa;border-left:4px solid #0f766e;padding:10px 12px;border-radius:8px;">
-            <strong style="color:#134e4a;">🛋 Sky Hub Lounge —— 请用 T1 那一间</strong>
-            <p style="margin-top:5px;color:#134e4a;">原收藏的「Sky Hub Lounge East T2」在第二航站楼，本次返程用不上。<strong>T1 的 Sky Hub Lounge 位于 4 楼西侧、29 号登机口附近，几乎 24 小时开放</strong>，持 Priority Pass / 龙腾出行 / 高端信用卡免费进入。10/12 20:50 在此享用热食晚餐（易斯达为廉航，机上餐食需付费，建议吃饱再登机）。</p>
+            <strong style="color:#134e4a;">🛋 Sky Hub Lounge 贵宾室礼遇 (仁川 T1 航站楼)</strong>
+            <p style="margin-top:5px;color:#134e4a;"><strong>T1 的 Sky Hub Lounge 位于 4 楼西侧、29 号登机口附近，几乎 24 小时开放</strong>，持 Priority Pass / 龙腾出行 / 高端信用卡免费进入。10/12 20:50 可在此享用热食晚餐与休整，为返程航班储备精力。</p>
           </div>
           <div style="margin-top:12px;background:#eff6ff;border-left:4px solid #2563eb;padding:10px 12px;border-radius:8px;">
-            <strong style="color:#1e40af;">🧳 10/12 全天自由日的行李与返程动线</strong>
-            <p style="margin-top:5px;color:#1e40af;">09:00 退房后把行李<strong>寄存在 Momento Hostel 前台</strong>，地铁 2 号线 12 分钟直达圣水洞，逛到 17:00。17:15 坐回乙支路3街取行李（12 分钟），18:15 打车至首尔站，18:35 搭 AREX 直通列车，<strong>19:20 抵达仁川 T1</strong> —— 距 22:30 起飞尚有 3 小时 10 分，从容。</p>
-            <p style="margin-top:6px;color:#1e40af;">⚠️ 与原弘大方案的区别：弘大入口站本身就在机场铁路线上可直接出发，而圣水洞不在，所以必须先回旅舍取行李。这是把圣水洞换到周一（人流最松）所付出的代价，动线中已预留充足时间。</p>
+            <strong style="color:#1e40af;">🧳 10/12 返程动线与行李寄存指引</strong>
+            <p style="margin-top:5px;color:#1e40af;">09:00 退房后将行李<strong>寄存于九树酒店前台</strong>，搭乘地铁前往圣水洞全天尽情探索，逛至约 17:00。17:15 乘坐地铁返回九树酒店提取行李，18:15 前往首尔站搭乘 AREX 直通列车，<strong>19:20 顺利抵达仁川 T1 航站楼</strong> —— 距 22:30 登机起飞预留超过 3 小时，悠闲从容。</p>
           </div>
         </div>
       </div>
@@ -5667,14 +5907,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "id": 175,
     "city": "首尔 (Seoul)",
     "district": "明洞 & 乙支路 (Myeongdong / Euljiro)",
-    "title": "Momento Hostel",
+    "title": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞精品酒店)",
     "category": "酒店与旅行住宿",
     "cat_key": "hotel",
     "icon": "🏨",
-    "note": "",
-    "lat": 37.56931,
-    "lng": 126.98451,
-    "url": "https://www.google.com/maps/place/Momento+Hostel/data=!4m2!3m1!1s0x357ca3006ed4d74f:0x6c91ab87a2f01812"
+    "note": "49 Insadong-gil, Jongno-gu, Seoul。仁寺洞核心文化街区，安国站 6 号口步行 3 分钟，双地铁直通。",
+    "lat": 37.5746,
+    "lng": 126.9856,
+    "url": "https://www.google.com/maps/search/Nine+Tree+Premier+Hotel+Insadong"
   },
   {
     "id": 176,
@@ -5914,14 +6154,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "id": 194,
     "city": "首尔 (Seoul)",
     "district": "明洞 & 乙支路 (Myeongdong / Euljiro)",
-    "title": "Momento Hostel Jongno",
+    "title": "Nine Tree Premier Hotel Insadong",
     "category": "酒店与旅行住宿",
     "cat_key": "hotel",
     "icon": "🏨",
-    "note": "",
-    "lat": 37.56931,
-    "lng": 126.98451,
-    "url": "https://www.google.com/maps/search/37.569306,126.984506"
+    "note": "仁寺洞九树精品酒店",
+    "lat": 37.5746,
+    "lng": 126.9856,
+    "url": "https://www.google.com/maps/search/Nine+Tree+Premier+Hotel+Insadong"
   },
   {
     "id": 195,
@@ -7483,7 +7723,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     ]
   }
 ];
-    const PLACE_ALIASES = {"116": ["TownePlace Suites by Marriott New York Manhattan/Times Square", "TownePlace Suites", "TownePlace Suites Midtown", "TownePlace", "万豪套房酒店", "324 W 44th St"], "127": ["时代广场 (Times Square)", "时代广场", "Times Square"], "87": ["Target", "塔吉特超市", "塔吉特", "Move Free"], "106": ["LOS TACOS No.1", "LOS TACOS", "Los Tacos"], "58": ["Junior's Restaurant & Bakery", "Junior's", "Juniors", "重芝士蛋糕"], "5": ["Kinokuniya New York", "Kinokuniya", "纪伊国屋书店", "纪伊国屋"], "136": ["布莱恩特公园", "Bryant Park"], "88": ["Whole Foods", "Whole Foods Market"], "59": ["Joe's Pizza Broadway", "Joe's Pizza", "Joes Pizza"], "105": ["Keens Steakhouse", "Keens"], "62": ["Mitr Thai Restaurant", "Mitr Thai"], "128": ["自由女神像", "自由女神", "Statue of Liberty"], "135": ["华尔街铜牛", "铜牛", "Charging Bull"], "126": ["纽约三一教堂", "三一教堂", "Trinity Church"], "80": ["世界贸易中心建筑群 (World Trade Center & Oculus)", "世界贸易中心", "世贸中心", "World Trade Center", "The Oculus", "Oculus"], "123": ["9/11国家纪念馆", "9/11纪念馆", "9/11 Memorial", "双子深渊水池", "Ground Zero Memorial", "Ground Zero"], "41": ["Water St & Washington St", "Water St", "Washington St"], "37": ["DUMBO Walls", "DUMBO"], "40": ["Jane's Carousel", "Janes Carousel", "旋转木马", "简氏旋转木马"], "132": ["布鲁克林大桥 & 水岸观景台 (Brooklyn Bridge & Lookout)", "布鲁克林大桥", "Brooklyn Bridge Lookout", "Brooklyn Bridge"], "32": ["Devoción", "Devocion", "69 Grand St"], "52": ["Brooklyn Brewery"], "27": ["Domino Park", "多米诺公园", "多米诺糖厂"], "84": ["Peter Luger Steak House", "Peter Luger"], "113": ["Ralph's Coffee", "Ralphs Coffee", "Ralph's", "888 Madison Ave", "布朗尼"], "223": ["Hermès Madison Avenue Flagship", "Hermès Maison Madison", "Hermès Madison", "Hermès", "爱马仕麦迪逊", "706 Madison Ave"], "133": ["大都会艺术博物馆", "大都会", "The Met", "丹铎神庙", "Temple of Dendur"], "134": ["中央公园", "Central Park", "弓桥", "Bow Bridge", "贝塞斯达露台与喷泉", "Bethesda Terrace"], "73": ["Bergdorf Goodman", "Bergdorf", "VB Beauty", "Victoria Beckham Beauty", "Travertine"], "112": ["Cafe Ginori at Bergdorf Goodman", "Cafe Ginori", "Ginori"], "221": ["Louis Vuitton 5th Ave (LV Trunk)", "LV Trunk", "Louis Vuitton 5th Ave", "LV 巨型旅行箱", "737 5th Ave"], "222": ["川普大厦 (Trump Tower)", "川普大厦", "Trump Tower", "特朗普大厦", "725 5th Ave"], "12": ["圣帕特里克大教堂 (St. Patrick's Cathedral · 圣巴特里爵主教座堂)", "圣帕特里克大教堂", "圣帕特里克", "St. Patrick's Cathedral", "St. Patrick's"], "131": ["现代艺术博物馆", "MoMA", "星月夜", "Starry Night", "睡莲", "Water Lilies"], "100": ["Blue Bottle Coffee", "Blue Bottle"], "130": ["洛克菲勒中心", "Top of the Rock", "峭石之巅", "The Weather Room", "The Beam", "洛克菲勒"], "76": ["Cho Dang Gol", "草堂豆腐"], "104": ["Gallagher’s Steakhouse NYC", "Gallagher’s", "Gallagher's", "Gallagher", "盖拉格牛排馆"], "129": ["帝国大厦", "Empire State Building"], "114": ["The Vessel", "Vessel", "大松果", "蜂巢"], "20": ["Edge 观景台 & Peak 餐厅 (Edge at Hudson Yards)", "Edge 观景台", "Peak 餐厅", "Edge at Hudson Yards", "Edge", "Peak"], "124": ["高线公园", "The High Line", "High Line"], "125": ["Chelsea Market", "切尔西市场", "The Lobster Place"], "53": ["小小岛", "Little Island", "漂浮公园", "Pier 55"], "1": ["Carrie Bradshaw's Apartment", "欲望都市公寓", "欲望都市", "Carrie Bradshaw", "凯莉故居", "66 Perry St"], "6": ["Magnolia Bakery", "Magnolia"], "224": ["Pranakorn Thai Bistro (西村旁泰餐)", "Pranakorn Thai Bistro", "Pranakorn Thai", "西村泰餐"], "2": ["Buvette", "42 Grove St"], "31": ["Supreme", "Supreme Bowery", "190 Bowery"], "225": ["New York or Nowhere (NYON)", "New York or Nowhere", "NY or Nowhere", "NYON"], "46": ["La Colombe Coffee Workshop", "La Colombe"], "68": ["Coming Soon", "53 Canal St"], "70": ["November 19 Shop", "Nov. 19", "Nov.19", "37 Orchard St"], "111": ["La Cabra"], "101": ["Katz's Delicatessen", "Katz's", "Katz"], "120": ["纽约公共图书馆", "NYPL", "Rose Main Reading Room", "玫瑰主阅览室", "Patience & Fortitude"], "220": ["纽约中央车站 (Grand Central Terminal)", "纽约中央车站", "中央车站", "Grand Central Terminal", "Grand Central"], "115": ["SUMMIT One Vanderbilt", "Summit 观景台", "Summit"], "214": ["仁川国际机场", "仁川机场", "Incheon Airport"], "194": ["Momento Hostel Jongno", "Momento Hostel", "Momento"], "186": ["清溪川", "Cheonggyecheon"], "145": ["Bakery A Goong", "A Goong"], "181": ["남영동양문 을지로점 Korean BBQ", "南营洞洋门", "洋门烤肉"], "180": ["Sindonggung Gamjatang Ppyeosutbulgui Euljiro Branch", "新东宫脊骨土豆汤", "Sindonggung", "新东宫"], "148": ["WangBiJip (Jongno branch)", "王妃家 钟路店", "王妃家", "WangBiJip"], "190": ["Camel Coffee (西村店)", "Camel Coffee 西村店", "Camel Coffee"], "185": ["景福宫", "Gyeongbokgung"], "184": ["Tosokchon Samgyetang", "土俗村参鸡汤", "土俗村", "Tosokchon"], "173": ["Ofr Seoul", "Ofr"], "174": ["PHAL"], "152": ["ROLAROLA"], "226": ["北村韩屋村 (Bukchon Hanok Village)", "北村韩屋村", "北村韩屋", "Bukchon Hanok Village"], "163": ["카페 델 꼬또네 북촌계동점", "델 꼬또네", "Del Cotone", "棉花咖啡"], "188": ["London Bagel Museum Anguk", "London Bagel Museum", "伦敦贝果", "安国伦敦贝果"], "167": ["Acorn Caricature Insadong Branch", "Acorn Caricature", "橡果肖像画"], "166": ["National Museum of Modern and Contemporary Art, Seoul", "韩国国立现代美术馆", "国立现代美术馆", "MMCA"], "182": ["On 6.5"], "146": ["乐天百货总店", "乐天百货", "Lotte Department Store"], "217": ["OLIVE YOUNG Central Myeongdong Town Branch", "Olive Young 明洞总店", "Olive Young"], "205": ["Tamburins Seongsu", "Tamburins"], "201": ["HAUS NOWHERE SEOUL (Gentle Monster 圣水旗舰)", "Gentle Monster HQ", "Gentle Monster", "HAUS NOWHERE"], "230": ["Musinsa Standard Seongsu", "Musinsa Standard", "Musinsa"], "203": ["emis (聖水店)", "emis (圣水店)", "圣水emis"], "204": ["Rockfish weatherwear (圣水店)", "Rockfish weatherwear", "Rockfish Weatherwear"], "179": ["Hince Seongsu Flagship Store", "Hince 圣水店", "Hince"], "199": ["STAND OIL"], "193": ["Rest & Recreation (圣水首尔林店)", "Rest & Recreation 圣水店"], "170": ["首尔林 (Seoul Forest) & Forest Seoulsup", "首尔林", "Seoul Forest", "Forest Seoulsup"], "196": ["Standard Bread"], "192": ["Camel Coffee Seongsu", "Camel Coffee 圣水店"], "177": ["BOONTHESHOP (清潭总店)", "BOONTHESHOP"], "183": ["Woody Zip"], "178": ["Queen's Park", "Queens Park"], "161": ["Myeong-In Deungsim Apgujeong", "Myeong-In Deungsim", "名人里脊"], "231": ["元祖马山辣炖安康鱼 & 酱蟹老店", "元祖马山", "马山辣炖安康鱼"], "154": ["Conte de Tulear"], "157": ["Mardi Mercredi (汉南总店)", "Mardi Mercredi", "Mardi"], "153": ["OPEN YY Flagship Store 한남", "OPEN YY", "Open YY"], "232": ["Grove Store Hannam (格罗夫女装)", "Grove Store", "Grove"], "200": ["Rest & Recreation HANNAM Store", "Rest & Recreation 汉南店", "Rest & Recreation"], "172": ["Rockfish Weatherwear MyeongDong", "Rockfish 汉南店", "Rockfish 明洞店"], "151": ["Milestone Coffee Hannam", "Milestone Coffee"], "155": ["24-hour Bone Gamjatang", "24小时脊骨土豆汤", "脊骨土豆汤"], "156": ["Hannam Budaejjigae", "汉南部队锅", "部队锅"], "233": ["Solgot Hannam (汉南洞精致传统釜饭)", "Solgot Hannam", "Solgot"], "149": ["Matin Kim Myeongdong Store", "Matin Kim"], "144": ["nyunyu myeongdong", "nyunyu"], "228": ["Hemeko (明洞彩妆护肤集合店)", "Hemeko"], "227": ["Hello Kitty Pop-up / Cafe (明洞)", "Hello Kitty Pop-up", "Hello Kitty"], "229": ["明洞趣味路漫画街 (Zaemiro)", "明洞趣味路漫画街", "明洞趣味路", "趣味路漫画街", "Zaemiro"], "218": ["德寿宫", "Deoksugung"], "24": ["L'industrie Pizzeria - Williamsburg", "L'industrie Pizzeria", "L'industrie", "L'industrie 披萨"], "38": ["Time Out Market New York", "Time Out Market"], "42": ["DUMBO Manhattan Bridge View", "DUMBO", "曼哈顿大桥机位", "曼哈顿桥机位", "Washington St & Water St", "Water St & Washington St"], "49": ["New York or Nowhere (NYON)", "New York or Nowhere", "NYON", "250 Lafayette St"], "89": ["特朗普大厦", "Trump Tower"], "95": ["Pranakhon", "Pranakhon 泰餐", "88 University Pl"], "109": ["Supreme", "Supreme Bowery"], "118": ["Louis Vuitton Trunk", "LV Trunk"], "119": ["熨斗大厦", "Flatiron Building", "Flatiron"], "234": ["La Dồng", "La Dong", "Ladong"], "235": ["The Battery 炮台公园 (远眺自由女神海湾步道)", "The Battery 炮台公园", "The Battery", "炮台公园", "自由女神像", "自由女神海湾步道", "自由女神"], "15": ["Caffè Panna", "Caffe Panna", "77 Irving Pl"], "17": ["Dudleys", "Dudley's", "85 Orchard St"], "26": ["Loaf on Paper by niconeco zakkaya", "Loaf on Paper", "niconeco zakkaya", "niconeco", "64 Grand St"], "28": ["BAGGU SoHo", "BAGGU", "91 Mercer St"], "30": ["Lockwood Williamsburg", "Lockwood"], "33": ["Driggs Mercantile", "Driggs", "540 Driggs Ave"], "44": ["Glossier NYC", "Glossier", "72 Spring St"], "45": ["Eileen's Special Cheesecake", "Eileen's", "Eileen", "17 Cleveland Pl"], "63": ["Hermès Maison Madison", "Hermès", "爱马仕麦迪逊", "706 Madison Ave", "爱马仕"], "64": ["paloma wool", "Paloma Wool", "423 Broome St"], "66": ["Beverly 1975", "80 Orchard St"], "67": ["TUMBAO", "tumbao", "79 Orchard St"], "69": ["A Shop of Things", "A shop of things", "78 Orchard St"], "71": ["NO GEM", "105 Orchard St"], "94": ["colbo", "Colbo", "51 Orchard St"], "236": ["Strip House Midtown", "Strip House", "经典老牌牛排馆", "15 W 44th St", "Bone-in Ribeye"], "237": ["Grove Court", "10-12 Grove St"], "238": ["联邦国家纪念堂 & 华盛顿铜像 (Federal Hall)", "Federal Hall", "联邦国家纪念堂", "乔治·华盛顿宣誓就职青铜巨像", "华盛顿铜像", "纽约证券交易所", "NYSE", "Wall St"], "239": ["Pebble Beach (卵石海滩)", "Pebble Beach", "卵石海滩"], "240": ["Empire Stores 5F 免费观景露台", "Empire Stores", "帝国仓库", "5F 免费观景露台", "5F 免费屋顶露台"], "241": ["Miss Nellie's", "Miss Nellie", "325 W 44th St"], "242": ["Louis Vuitton SoHo (路易威登)", "Louis Vuitton SoHo", "LV SoHo", "116 Greene St"], "243": ["Supreme Williamsburg", "152 Grand St"]};
+    const PLACE_ALIASES = {"116": ["TownePlace Suites by Marriott New York Manhattan/Times Square", "TownePlace Suites", "TownePlace Suites Midtown", "TownePlace", "万豪套房酒店", "324 W 44th St"], "127": ["时代广场 (Times Square)", "时代广场", "Times Square"], "87": ["Target", "塔吉特超市", "塔吉特", "Move Free"], "106": ["LOS TACOS No.1", "LOS TACOS", "Los Tacos"], "58": ["Junior's Restaurant & Bakery", "Junior's", "Juniors", "重芝士蛋糕"], "5": ["Kinokuniya New York", "Kinokuniya", "纪伊国屋书店", "纪伊国屋"], "136": ["布莱恩特公园", "Bryant Park"], "88": ["Whole Foods", "Whole Foods Market"], "59": ["Joe's Pizza Broadway", "Joe's Pizza", "Joes Pizza"], "105": ["Keens Steakhouse", "Keens"], "62": ["Mitr Thai Restaurant", "Mitr Thai"], "128": ["自由女神像", "自由女神", "Statue of Liberty"], "135": ["华尔街铜牛", "铜牛", "Charging Bull"], "126": ["纽约三一教堂", "三一教堂", "Trinity Church"], "80": ["世界贸易中心建筑群 (World Trade Center & Oculus)", "世界贸易中心", "世贸中心", "World Trade Center", "The Oculus", "Oculus"], "123": ["9/11国家纪念馆", "9/11纪念馆", "9/11 Memorial", "双子深渊水池", "Ground Zero Memorial", "Ground Zero"], "41": ["Water St & Washington St", "Water St", "Washington St"], "37": ["DUMBO Walls", "DUMBO"], "40": ["Jane's Carousel", "Janes Carousel", "旋转木马", "简氏旋转木马"], "132": ["布鲁克林大桥 & 水岸观景台 (Brooklyn Bridge & Lookout)", "布鲁克林大桥", "Brooklyn Bridge Lookout", "Brooklyn Bridge"], "32": ["Devoción", "Devocion", "69 Grand St"], "52": ["Brooklyn Brewery"], "27": ["Domino Park", "多米诺公园", "多米诺糖厂"], "84": ["Peter Luger Steak House", "Peter Luger"], "113": ["Ralph's Coffee", "Ralphs Coffee", "Ralph's", "888 Madison Ave", "布朗尼"], "223": ["Hermès Madison Avenue Flagship", "Hermès Maison Madison", "Hermès Madison", "Hermès", "爱马仕麦迪逊", "706 Madison Ave"], "133": ["大都会艺术博物馆", "大都会", "The Met", "丹铎神庙", "Temple of Dendur"], "134": ["中央公园", "Central Park", "弓桥", "Bow Bridge", "贝塞斯达露台与喷泉", "Bethesda Terrace"], "73": ["Bergdorf Goodman", "Bergdorf", "VB Beauty", "Victoria Beckham Beauty", "Travertine"], "112": ["Cafe Ginori at Bergdorf Goodman", "Cafe Ginori", "Ginori"], "221": ["Louis Vuitton 5th Ave (LV Trunk)", "LV Trunk", "Louis Vuitton 5th Ave", "LV 巨型旅行箱", "737 5th Ave"], "222": ["川普大厦 (Trump Tower)", "川普大厦", "Trump Tower", "特朗普大厦", "725 5th Ave"], "12": ["圣帕特里克大教堂 (St. Patrick's Cathedral · 圣巴特里爵主教座堂)", "圣帕特里克大教堂", "圣帕特里克", "St. Patrick's Cathedral", "St. Patrick's"], "131": ["现代艺术博物馆", "MoMA", "星月夜", "Starry Night", "睡莲", "Water Lilies"], "100": ["Blue Bottle Coffee", "Blue Bottle"], "130": ["洛克菲勒中心", "Top of the Rock", "峭石之巅", "The Weather Room", "The Beam", "洛克菲勒"], "76": ["Cho Dang Gol", "草堂豆腐"], "104": ["Gallagher’s Steakhouse NYC", "Gallagher’s", "Gallagher's", "Gallagher", "盖拉格牛排馆"], "129": ["帝国大厦", "Empire State Building"], "114": ["The Vessel", "Vessel", "大松果", "蜂巢"], "20": ["Edge 观景台 & Peak 餐厅 (Edge at Hudson Yards)", "Edge 观景台", "Peak 餐厅", "Edge at Hudson Yards", "Edge", "Peak"], "124": ["高线公园", "The High Line", "High Line"], "125": ["Chelsea Market", "切尔西市场", "The Lobster Place"], "53": ["小小岛", "Little Island", "漂浮公园", "Pier 55"], "1": ["Carrie Bradshaw's Apartment", "欲望都市公寓", "欲望都市", "Carrie Bradshaw", "凯莉故居", "66 Perry St"], "6": ["Magnolia Bakery", "Magnolia"], "224": ["Pranakorn Thai Bistro (西村旁泰餐)", "Pranakorn Thai Bistro", "Pranakorn Thai", "西村泰餐"], "2": ["Buvette", "42 Grove St"], "31": ["Supreme", "Supreme Bowery", "190 Bowery"], "225": ["New York or Nowhere (NYON)", "New York or Nowhere", "NY or Nowhere", "NYON"], "46": ["La Colombe Coffee Workshop", "La Colombe"], "68": ["Coming Soon", "53 Canal St"], "70": ["November 19 Shop", "Nov. 19", "Nov.19", "37 Orchard St"], "111": ["La Cabra"], "101": ["Katz's Delicatessen", "Katz's", "Katz"], "120": ["纽约公共图书馆", "NYPL", "Rose Main Reading Room", "玫瑰主阅览室", "Patience & Fortitude"], "220": ["纽约中央车站 (Grand Central Terminal)", "纽约中央车站", "中央车站", "Grand Central Terminal", "Grand Central"], "115": ["SUMMIT One Vanderbilt", "Summit 观景台", "Summit"], "214": ["仁川国际机场", "仁川机场", "Incheon Airport"], "175": ["Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)", "Nine Tree Premier Hotel Insadong", "Nine Tree Premier Hotel", "九树顶级酒店仁寺洞店 (Nine Tree Premier Hotel)", "九树仁寺洞精品酒店", "九树酒店", "首尔九树仁寺洞", "漫步返回九树酒店休整", "返回九树酒店休整", "返回九树酒店提取寄存行李"],
+    "194": ["Nine Tree Premier Hotel Insadong", "九树酒店", "Nine Tree", "首尔九树仁寺洞"], "186": ["清溪川", "Cheonggyecheon"], "145": ["Bakery A Goong", "A Goong"], "181": ["남영동양문 을지로점 Korean BBQ", "南营洞洋门", "洋门烤肉"], "180": ["Sindonggung Gamjatang Ppyeosutbulgui Euljiro Branch", "新东宫脊骨土豆汤", "Sindonggung", "新东宫"], "148": ["WangBiJip (Jongno branch)", "王妃家 钟路店", "王妃家", "WangBiJip"], "190": ["Camel Coffee (西村店)", "Camel Coffee 西村店", "Camel Coffee"], "185": ["景福宫", "Gyeongbokgung"], "184": ["Tosokchon Samgyetang", "土俗村参鸡汤", "土俗村", "Tosokchon"], "173": ["Ofr Seoul", "Ofr"], "174": ["PHAL"], "152": ["ROLAROLA"], "226": ["北村韩屋村 (Bukchon Hanok Village)", "北村韩屋村", "北村韩屋", "Bukchon Hanok Village"], "163": ["카페 델 꼬또네 북촌계동점", "델 꼬또네", "Del Cotone", "棉花咖啡"], "188": ["London Bagel Museum Anguk", "London Bagel Museum", "伦敦贝果", "安国伦敦贝果"], "167": ["Acorn Caricature Insadong Branch", "Acorn Caricature", "橡果肖像画"], "166": ["National Museum of Modern and Contemporary Art, Seoul", "韩国国立现代美术馆", "国立现代美术馆", "MMCA"], "182": ["On 6.5"], "146": ["乐天百货总店", "乐天百货", "Lotte Department Store"], "217": ["OLIVE YOUNG Central Myeongdong Town Branch", "Olive Young 明洞总店", "Olive Young"], "205": ["Tamburins Seongsu", "Tamburins"], "201": ["HAUS NOWHERE SEOUL (Gentle Monster 圣水旗舰)", "Gentle Monster HQ", "Gentle Monster", "HAUS NOWHERE"], "230": ["Musinsa Standard Seongsu", "Musinsa Standard", "Musinsa"], "203": ["emis (聖水店)", "emis (圣水店)", "圣水emis"], "204": ["Rockfish weatherwear (圣水店)", "Rockfish weatherwear", "Rockfish Weatherwear"], "179": ["Hince Seongsu Flagship Store", "Hince 圣水店", "Hince"], "199": ["STAND OIL"], "193": ["Rest & Recreation (圣水首尔林店)", "Rest & Recreation 圣水店"], "170": ["首尔林 (Seoul Forest) & Forest Seoulsup", "首尔林", "Seoul Forest", "Forest Seoulsup"], "196": ["Standard Bread"], "192": ["Camel Coffee Seongsu", "Camel Coffee 圣水店"], "177": ["BOONTHESHOP (清潭总店)", "BOONTHESHOP"], "183": ["Woody Zip"], "178": ["Queen's Park", "Queens Park"], "161": ["Myeong-In Deungsim Apgujeong", "Myeong-In Deungsim", "名人里脊"], "231": ["元祖马山辣炖安康鱼 & 酱蟹老店", "元祖马山", "马山辣炖安康鱼"], "154": ["Conte de Tulear"], "157": ["Mardi Mercredi (汉南总店)", "Mardi Mercredi", "Mardi"], "153": ["OPEN YY Flagship Store 한남", "OPEN YY", "Open YY"], "232": ["Grove Store Hannam (格罗夫女装)", "Grove Store", "Grove"], "200": ["Rest & Recreation HANNAM Store", "Rest & Recreation 汉南店", "Rest & Recreation"], "172": ["Rockfish Weatherwear MyeongDong", "Rockfish 汉南店", "Rockfish 明洞店"], "151": ["Milestone Coffee Hannam", "Milestone Coffee"], "155": ["24-hour Bone Gamjatang", "24小时脊骨土豆汤", "脊骨土豆汤"], "156": ["Hannam Budaejjigae", "汉南部队锅", "部队锅"], "233": ["Solgot Hannam (汉南洞精致传统釜饭)", "Solgot Hannam", "Solgot"], "149": ["Matin Kim Myeongdong Store", "Matin Kim"], "144": ["nyunyu myeongdong", "nyunyu"], "228": ["Hemeko (明洞彩妆护肤集合店)", "Hemeko"], "227": ["Hello Kitty Pop-up / Cafe (明洞)", "Hello Kitty Pop-up", "Hello Kitty"], "229": ["明洞趣味路漫画街 (Zaemiro)", "明洞趣味路漫画街", "明洞趣味路", "趣味路漫画街", "Zaemiro"], "218": ["德寿宫", "Deoksugung"], "24": ["L'industrie Pizzeria - Williamsburg", "L'industrie Pizzeria", "L'industrie", "L'industrie 披萨"], "38": ["Time Out Market New York", "Time Out Market"], "42": ["DUMBO Manhattan Bridge View", "DUMBO", "曼哈顿大桥机位", "曼哈顿桥机位", "Washington St & Water St", "Water St & Washington St"], "49": ["New York or Nowhere (NYON)", "New York or Nowhere", "NYON", "250 Lafayette St"], "89": ["特朗普大厦", "Trump Tower"], "95": ["Pranakhon", "Pranakhon 泰餐", "88 University Pl"], "109": ["Supreme", "Supreme Bowery"], "118": ["Louis Vuitton Trunk", "LV Trunk"], "119": ["熨斗大厦", "Flatiron Building", "Flatiron"], "234": ["La Dồng", "La Dong", "Ladong"], "235": ["The Battery 炮台公园 (远眺自由女神海湾步道)", "The Battery 炮台公园", "The Battery", "炮台公园", "自由女神像", "自由女神海湾步道", "自由女神"], "15": ["Caffè Panna", "Caffe Panna", "77 Irving Pl"], "17": ["Dudleys", "Dudley's", "85 Orchard St"], "26": ["Loaf on Paper by niconeco zakkaya", "Loaf on Paper", "niconeco zakkaya", "niconeco", "64 Grand St"], "28": ["BAGGU SoHo", "BAGGU", "91 Mercer St"], "30": ["Lockwood Williamsburg", "Lockwood"], "33": ["Driggs Mercantile", "Driggs", "540 Driggs Ave"], "44": ["Glossier NYC", "Glossier", "72 Spring St"], "45": ["Eileen's Special Cheesecake", "Eileen's", "Eileen", "17 Cleveland Pl"], "63": ["Hermès Maison Madison", "Hermès", "爱马仕麦迪逊", "706 Madison Ave", "爱马仕"], "64": ["paloma wool", "Paloma Wool", "423 Broome St"], "66": ["Beverly 1975", "80 Orchard St"], "67": ["TUMBAO", "tumbao", "79 Orchard St"], "69": ["A Shop of Things", "A shop of things", "78 Orchard St"], "71": ["NO GEM", "105 Orchard St"], "94": ["colbo", "Colbo", "51 Orchard St"], "236": ["Strip House Midtown", "Strip House", "经典老牌牛排馆", "15 W 44th St", "Bone-in Ribeye"], "237": ["Grove Court", "10-12 Grove St"], "238": ["联邦国家纪念堂 & 华盛顿铜像 (Federal Hall)", "Federal Hall", "联邦国家纪念堂", "乔治·华盛顿宣誓就职青铜巨像", "华盛顿铜像", "纽约证券交易所", "NYSE", "Wall St"], "239": ["Pebble Beach (卵石海滩)", "Pebble Beach", "卵石海滩"], "240": ["Empire Stores 5F 免费观景露台", "Empire Stores", "帝国仓库", "5F 免费观景露台", "5F 免费屋顶露台"], "241": ["Miss Nellie's", "Miss Nellie", "325 W 44th St"], "242": ["Louis Vuitton SoHo (路易威登)", "Louis Vuitton SoHo", "LV SoHo", "116 Greene St"], "243": ["Supreme Williamsburg", "152 Grand St"]};
     const BOOKINGS = [
   {
     "id": 1,
@@ -7641,14 +7882,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   },
   {
     "id": 15,
-    "name": "Momento Hostel 前台寄存行李 — 10/12",
+    "name": "九树酒店前台寄存行李 — 10/12",
     "city": "首尔",
     "category": "🧳 行李寄存",
     "priority": "ℹ️ 备忘须知",
     "suggested_lead": "退房时告知前台",
-    "channel": "旅舍前台",
-    "url": "https://www.momentohostel.com",
-    "notes": "周一 11:00 前退房时告知前台寄存行李，全天轻装游玩圣水洞，晚间回旅舍取件打车前往机场。"
+    "channel": "九树酒店前台",
+    "url": "https://www.ninetreehotels.com",
+    "notes": "周一 11:00 前退房时告知九树酒店前台寄存行李，全天轻装游玩圣水洞，傍晚回酒店取件前往首尔站搭乘 AREX 直通列车。"
   },
   {
     "id": 16,
@@ -8112,22 +8353,133 @@ svg.leaflet-image-layer.leaflet-interactive path {
       splitEl.classList.remove('mode-split-v', 'mode-split-h', 'mode-itinerary', 'mode-map');
       splitEl.classList.add('mode-' + submode);
 
-      document.querySelectorAll('.btn-mode-pill').forEach(b => b.classList.remove('active'));
-
-      if (submode === 'split-v') {
-        document.getElementById('btnModeSplitV').classList.add('active');
-      } else if (submode === 'split-h') {
-        document.getElementById('btnModeSplitH').classList.add('active');
-      } else if (submode === 'itinerary') {
-        document.getElementById('btnModeItinerary').classList.add('active');
-      } else if (submode === 'map') {
-        document.getElementById('btnModeMap').classList.add('active');
+      const sel = document.getElementById('viewModeSelect');
+      if (sel && sel.value !== submode) {
+        sel.value = submode;
       }
+
+      document.querySelectorAll('.btn-mode-pill').forEach(b => b.classList.remove('active'));
+      const pillBtn = document.getElementById({
+        'split-v': 'btnModeSplitV',
+        'split-h': 'btnModeSplitH',
+        'itinerary': 'btnModeItinerary',
+        'map': 'btnModeMap'
+      }[submode]);
+      if (pillBtn) pillBtn.classList.add('active');
 
       setTimeout(() => {
         if (map) map.invalidateSize();
-      }, 220);
+      }, 150);
     }
+
+    
+    // ========================================================
+    // Draggable Split Resizer Logic (Touch & Mouse Support)
+    // ========================================================
+    (function initSplitResizer() {
+      const resizer = document.getElementById('splitResizer');
+      const container = document.getElementById('splitContentArea');
+      const mapPanel = document.getElementById('splitMapPanel');
+      const sidebar = document.getElementById('splitSidebar');
+      if (!resizer || !container || !mapPanel || !sidebar) return;
+
+      let isDragging = false;
+      let startCoord = 0;
+      let startDim = 0;
+      let totalDim = 0;
+      let animFrameId = null;
+
+      function getCoords(e) {
+        if (e.touches && e.touches.length > 0) {
+          return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+      }
+
+      function onStart(e) {
+        if (currentSubmode !== 'split-v' && currentSubmode !== 'split-h') return;
+        isDragging = true;
+        resizer.classList.add('dragging');
+        document.body.classList.add('is-resizing');
+
+        const coords = getCoords(e);
+        const rect = container.getBoundingClientRect();
+
+        if (currentSubmode === 'split-v') {
+          startCoord = coords.y;
+          startDim = mapPanel.getBoundingClientRect().height;
+          totalDim = rect.height;
+        } else {
+          startCoord = coords.x;
+          startDim = sidebar.getBoundingClientRect().width;
+          totalDim = rect.width;
+        }
+
+        if (e.cancelable && e.type.startsWith('touch')) {
+          e.preventDefault();
+        }
+      }
+
+      function onMove(e) {
+        if (!isDragging) return;
+        const coords = getCoords(e);
+
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+        animFrameId = requestAnimationFrame(() => {
+          if (currentSubmode === 'split-v') {
+            const deltaY = coords.y - startCoord;
+            let newH = startDim + deltaY;
+            const minH = 70;
+            const maxH = totalDim - 90;
+            newH = Math.max(minH, Math.min(maxH, newH));
+            const pct = (newH / totalDim) * 100;
+            container.style.setProperty('--map-v-height', pct.toFixed(2) + '%');
+            try { localStorage.setItem('trip_map_v_pct', pct.toFixed(2)); } catch(err) {}
+          } else if (currentSubmode === 'split-h') {
+            const deltaX = coords.x - startCoord;
+            let newW = startDim + deltaX;
+            const minW = 160;
+            const maxW = totalDim - 160;
+            newW = Math.max(minW, Math.min(maxW, newW));
+            const pct = (newW / totalDim) * 100;
+            container.style.setProperty('--sidebar-h-width', pct.toFixed(2) + '%');
+            try { localStorage.setItem('trip_sidebar_h_pct', pct.toFixed(2)); } catch(err) {}
+          }
+          if (map) map.invalidateSize();
+        });
+
+        if (e.cancelable && e.type.startsWith('touch')) {
+          e.preventDefault();
+        }
+      }
+
+      function onEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        resizer.classList.remove('dragging');
+        document.body.classList.remove('is-resizing');
+        setTimeout(() => {
+          if (map) map.invalidateSize();
+        }, 60);
+      }
+
+      resizer.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove, { passive: false });
+      window.addEventListener('mouseup', onEnd);
+
+      resizer.addEventListener('touchstart', onStart, { passive: false });
+      window.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('touchend', onEnd);
+      window.addEventListener('touchcancel', onEnd);
+
+      // Restore saved proportions
+      try {
+        const savedV = localStorage.getItem('trip_map_v_pct');
+        if (savedV) container.style.setProperty('--map-v-height', savedV + '%');
+        const savedH = localStorage.getItem('trip_sidebar_h_pct');
+        if (savedH) container.style.setProperty('--sidebar-h-width', savedH + '%');
+      } catch(err) {}
+    })();
 
     // Render 11 Days Selector
     function renderDaySelectors() {
