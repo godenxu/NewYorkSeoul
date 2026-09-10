@@ -2752,123 +2752,189 @@ svg.leaflet-image-layer.leaflet-interactive path {
   
 
 
-    /* ========================================================
-       🍱 Bento Box Timeline UI (醒目蓝色时间 + 黑色地点 + 便当盒框)
+            /* ========================================================
+       🍱 Bento Box Timeline UI (极简无冗余折叠任务卡片)
        ======================================================== */
     .bento-box-card {
       background: #ffffff;
       border: 1.8px solid #cbd5e1;
-      border-radius: 13px;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
-      margin-bottom: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+      margin-bottom: 10px;
       flex-shrink: 0 !important;
       width: 100%;
       box-sizing: border-box;
       overflow: hidden;
-      transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease;
+      transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
     }
     .bento-box-card:hover {
       border-color: #2563eb;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(15, 23, 42, 0.04);
-      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1), 0 2px 5px rgba(15, 23, 42, 0.03);
     }
+    .bento-box-card.is-open {
+      border-color: #3b82f6;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12), 0 3px 8px rgba(15, 23, 42, 0.04);
+    }
+    /* 已打卡完成状态 */
+    .bento-box-card.is-done {
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      opacity: 0.82;
+    }
+    .bento-box-card.is-done .bento-place-title {
+      color: #64748b;
+      text-decoration: line-through;
+    }
+    .bento-box-card.is-done .bento-time-badge {
+      background: #64748b;
+      box-shadow: none;
+      opacity: 0.85;
+    }
+
     .bento-header {
       background: #f8fafc;
-      padding: 10px 14px;
-      border-bottom: 1.5px solid #e2e8f0;
+      padding: 10px 12px;
+      border-bottom: 1px solid transparent;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      flex-wrap: wrap;
       flex-shrink: 0;
       cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
     }
     .bento-header:hover {
       background: #f1f5f9;
     }
-    /* 醒目的蓝色时间 (Striking Blue Time Badge) */
+    .bento-box-card.is-open .bento-header {
+      border-bottom: 1.5px solid #e2e8f0;
+      background: #f1f5f9;
+    }
+
+    .bento-header-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .bento-header-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* 醒目的蓝色时间徽章 */
     .bento-time-badge {
       background: #2563eb;
       color: #ffffff;
-      font-size: 0.92rem;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 7px;
       white-space: nowrap;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.28);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      flex-shrink: 0;
-    }
-    .bento-time-icon {
-      font-size: 0.85rem;
-    }
-    /* 醒目的黑色地点 (Prominent Black Place Title) */
-    .bento-place-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.2px;
-      flex: 1;
-      min-width: 140px;
-      word-break: break-word;
-    }
-    /* Bento pin link badge */
-    .bento-pin-btn {
-      background: #ffffff;
-      border: 1.5px solid #94a3b8;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: #1e293b;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      transition: all 0.15s ease;
-      flex-shrink: 0;
-    }
-    .bento-pin-btn:hover {
-      background: #2563eb;
-      color: #ffffff;
-      border-color: #2563eb;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
-      transform: scale(1.03);
-    }
-    .bento-pin-num {
-      background: #0f172a;
-      color: #ffffff;
-      font-size: 0.68rem;
-      font-weight: 900;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.22);
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    /* 醒目的地点任务标题 (独占一行，绝无胶囊与重复信息) */
+    .bento-place-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+      flex: 1 1 auto;
+      min-width: 0;
+      line-height: 1.4;
+      word-break: break-word;
+      transition: color 0.15s ease;
+    }
+
+    /* 任务打卡圆形勾选框 */
+    .bento-chk {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .bento-chk:hover {
+      border-color: #2563eb;
+      background: #eff6ff;
+      transform: scale(1.08);
+    }
+    .bento-chk svg {
+      width: 13px;
+      height: 13px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .bento-box-card.is-done .bento-chk {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+    .bento-box-card.is-done .bento-chk svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* 折叠展开小箭头 */
+    .bento-caret {
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.15s ease;
       flex-shrink: 0;
     }
-    .bento-pin-btn:hover .bento-pin-num {
-      background: #ffffff;
+    .bento-header:hover .bento-caret {
       color: #2563eb;
     }
-    /* Bento Body & Compartments */
+    .bento-box-card.is-open .bento-caret {
+      transform: rotate(180deg);
+      color: #2563eb;
+    }
+
+    /* Bento Body (默认隐藏，展开时平滑呈现) */
     .bento-body {
+      display: none;
       padding: 12px 14px;
-      display: flex;
       flex-direction: column;
       gap: 9px;
       flex-shrink: 0;
       font-size: 0.86rem;
       line-height: 1.65;
       color: #334155;
+      border-top: 1px solid #e2e8f0;
     }
+    .bento-box-card.is-open .bento-body {
+      display: flex;
+      animation: bentoFadeIn 0.2s ease;
+    }
+    @keyframes bentoFadeIn {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .bento-activity {
       color: #1e293b;
       line-height: 1.65;
@@ -2906,13 +2972,115 @@ svg.leaflet-image-layer.leaflet-interactive path {
       border-left: 4px solid #22c55e;
       color: #166534;
     }
+
+    /* 当日打卡进度与全部展开栏 */
+    .day-progress-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 11px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      flex-shrink: 0;
+    }
+    .day-progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .day-progress-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .day-progress-badge {
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid #bfdbfe;
+    }
+    .day-progress-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #334155;
+    }
+    .day-toggle-all-btn {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .day-toggle-all-btn:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .day-toggle-all-btn .toggle-all-icon {
+      font-size: 0.72rem;
+      transition: transform 0.18s ease;
+    }
+    .day-progress-track {
+      width: 100%;
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .day-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      border-radius: 999px;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 优雅轻量 Toast 提示组件 */
+    .app-toast {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 999px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .app-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     .itinerary-end-card {
       background: #f8fafc;
       border: 1.5px dashed #cbd5e1;
       border-radius: 10px;
-      padding: 18px;
+      padding: 16px;
       text-align: center;
-      margin: 14px 0 36px 0;
+      margin: 12px 0 32px 0;
       flex-shrink: 0 !important;
     }
 
@@ -10371,17 +10539,140 @@ svg.leaflet-image-layer.leaflet-interactive path {
       return res;
     }
 
+            // =========================================
+    // 行程任务打卡与折叠状态管理 (WorkBuddy 极简设计)
+    // =========================================
+    const STORE_CHECK_KEY = 'trip2026.checks.v1';
+    let userChecks = loadChecks();
+
+    function loadChecks() {
+      try {
+        const raw = localStorage.getItem(STORE_CHECK_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveChecks() {
+      try {
+        localStorage.setItem(STORE_CHECK_KEY, JSON.stringify(userChecks));
+      } catch (e) {}
+    }
+
+    function isBlockDone(key) {
+      return !!userChecks[key];
+    }
+
+    function toggleBlockCheck(key, dayNum) {
+      if (userChecks[key]) {
+        delete userChecks[key];
+        showToast('已取消打卡');
+      } else {
+        userChecks[key] = 1;
+        showToast('已打卡完成 ✓');
+      }
+      saveChecks();
+
+      const cardEl = document.querySelector(`.bento-box-card[data-check-key="${key}"]`);
+      if (cardEl) {
+        cardEl.classList.toggle('is-done', !!userChecks[key]);
+      }
+      updateDayProgress(dayNum);
+    }
+
+    function showToast(msg) {
+      let toastEl = document.getElementById('appToast');
+      if (!toastEl) {
+        toastEl = document.createElement('div');
+        toastEl.id = 'appToast';
+        toastEl.className = 'app-toast';
+        document.body.appendChild(toastEl);
+      }
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastEl._timer);
+      toastEl._timer = setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 1600);
+    }
+
+    function toggleCardOpen(cardId) {
+      const el = document.getElementById(cardId);
+      if (!el) return;
+      el.classList.toggle('is-open');
+      syncToggleAllBtnState();
+    }
+
+    function handleCardClick(cardId, placeId) {
+      toggleCardOpen(cardId);
+      if (placeId && typeof focusMapPlace === 'function') {
+        focusMapPlace(placeId);
+      }
+    }
+
+    function toggleAllCards(dayNum) {
+      const cards = document.querySelectorAll('.bento-box-card');
+      if (!cards.length) return;
+      const anyClosed = Array.from(cards).some(c => !c.classList.contains('is-open'));
+      cards.forEach(c => {
+        if (anyClosed) {
+          c.classList.add('is-open');
+        } else {
+          c.classList.remove('is-open');
+        }
+      });
+      syncToggleAllBtnState();
+    }
+
+    function syncToggleAllBtnState() {
+      const cards = document.querySelectorAll('.bento-box-card');
+      if (!cards.length) return;
+      const allOpen = Array.from(cards).every(c => c.classList.contains('is-open'));
+      const textEl = document.getElementById('btnToggleAllText');
+      const iconEl = document.getElementById('btnToggleAllIcon');
+      if (textEl && iconEl) {
+        if (allOpen) {
+          textEl.textContent = '收起全部';
+          iconEl.textContent = '⌃';
+        } else {
+          textEl.textContent = '展开全部';
+          iconEl.textContent = '⌄';
+        }
+      }
+    }
+
+    function updateDayProgress(dayNum) {
+      const day = ITINERARY_DAYS.find(d => d.day_num === dayNum);
+      if (!day || !day.blocks) return;
+      const total = day.blocks.length;
+      let doneCount = 0;
+      day.blocks.forEach((_, idx) => {
+        const k = `d${dayNum}-${idx}`;
+        if (userChecks[k]) doneCount++;
+      });
+      const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+      const textEl = document.getElementById('dayProgressText');
+      if (textEl) {
+        textEl.textContent = `已打卡 ${doneCount} / ${total} 项 (${pct}%)`;
+      }
+      const fillEl = document.getElementById('dayProgressFill');
+      if (fillEl) {
+        fillEl.style.width = `${pct}%`;
+      }
+    }
+
     function renderItineraryTimeline(day) {
       const scrollContainer = document.getElementById('itineraryScroll');
       let html = '';
 
       // 日落 / 假日提示条
       if (day.sun && day.sun !== '—') {
-        const isHoliday = day.sun.indexOf('🎌') >= 0;
+        const isHoliday = day.sun.indexOf('🎌') >= 0 || day.sun.indexOf('🇰🇷') >= 0;
         html += `
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:9px 13px;border-radius:10px;
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 10px;padding:8px 12px;border-radius:9px;
                       background:${isHoliday ? '#fef3c7' : '#eff6ff'};border-left:4px solid ${isHoliday ? '#f59e0b' : '#3b82f6'};
-                      font-size:0.83rem;font-weight:700;color:${isHoliday ? '#92400e' : '#1e40af'};box-shadow:0 1px 3px rgba(0,0,0,0.03);flex-shrink:0;">
+                      font-size:0.82rem;font-weight:700;color:${isHoliday ? '#92400e' : '#1e40af'};box-shadow:0 1px 3px rgba(0,0,0,0.03);flex-shrink:0;">
             <span>☀️</span><span>${day.sun}</span>
           </div>
         `;
@@ -10405,8 +10696,36 @@ svg.leaflet-image-layer.leaflet-interactive path {
         p.seqNum = idx + 1;
       });
 
-      // Bento Box Timeline Cards
+      // 今日打卡进度与全部展开栏
+      const totalBlocks = (day.blocks || []).length;
+      let initialDoneCount = 0;
+      (day.blocks || []).forEach((_, idx) => {
+        if (isBlockDone(`d${day.day_num}-${idx}`)) initialDoneCount++;
+      });
+      const initialPct = totalBlocks > 0 ? Math.round((initialDoneCount / totalBlocks) * 100) : 0;
+
+      html += `
+        <div class="day-progress-card">
+          <div class="day-progress-header">
+            <div class="day-progress-meta">
+              <span class="day-progress-badge">🎯 今日打卡任务</span>
+              <span class="day-progress-text" id="dayProgressText">已打卡 ${initialDoneCount} / ${totalBlocks} 项 (${initialPct}%)</span>
+            </div>
+            <button type="button" class="day-toggle-all-btn" id="btnToggleAll" onclick="toggleAllCards(${day.day_num})" title="展开或收起当日全部细节">
+              <span id="btnToggleAllText">展开全部</span>
+              <span class="toggle-all-icon" id="btnToggleAllIcon">⌄</span>
+            </button>
+          </div>
+          <div class="day-progress-track">
+            <div class="day-progress-fill" id="dayProgressFill" style="width: ${initialPct}%;"></div>
+          </div>
+        </div>
+      `;
+
+      // Bento Box Timeline Cards (Clean & Un-duplicated)
       (day.blocks || []).forEach((b, bIdx) => {
+        const checkKey = `d${day.day_num}-${bIdx}`;
+        const isDone = isBlockDone(checkKey);
         const timeText = b.time || b.time_period || '全天';
         const placeText = b.place || b.title || '行程打卡点';
         
@@ -10428,20 +10747,20 @@ svg.leaflet-image-layer.leaflet-interactive path {
         const decoratedTips = decorateActivityWithPills(b.tips || '', dayPinPlaces);
 
         html += `
-          <div class="bento-box-card" id="bento-node-${bIdx}">
-            <div class="bento-header" onclick="${matchedPlace ? `focusMapPlace(${matchedPlace.id})` : ''}">
-              <div class="bento-time-badge">
-                <span class="bento-time-icon">🕒</span>
-                <span class="bento-time-text">${timeText}</span>
+          <div class="bento-box-card ${isDone ? 'is-done' : ''}" id="bento-node-${bIdx}" data-check-key="${checkKey}">
+            <div class="bento-header" onclick="handleCardClick('bento-node-${bIdx}', ${matchedPlace ? matchedPlace.id : 'null'})">
+              <div class="bento-header-left">
+                <div class="bento-time-badge">${timeText}</div>
+                <div class="bento-place-title">${placeText}</div>
               </div>
-              <div class="bento-place-title">${placeText}</div>
-              ${matchedPlace ? `
-                <span class="bento-pin-btn cat-${matchedPlace.cat_key}" onclick="event.stopPropagation(); focusMapPlace(${matchedPlace.id})" title="在地图上定位图钉 #${matchedPlace.seqNum}">
-                  <span class="bento-pin-num">${matchedPlace.seqNum}</span>
-                  <span class="bento-pin-icon">${matchedPlace.icon}</span>
-                  <span class="bento-pin-name">${matchedPlace.title}</span>
+              <div class="bento-header-right" onclick="event.stopPropagation()">
+                <button type="button" class="bento-chk" data-check="${checkKey}" onclick="event.stopPropagation(); toggleBlockCheck('${checkKey}', ${day.day_num})" aria-label="标记打卡完成" title="${isDone ? '取消打卡' : '标记已打卡'}">
+                  <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <span class="bento-caret" onclick="event.stopPropagation(); toggleCardOpen('bento-node-${bIdx}')" title="展开/折叠细节">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </span>
-              ` : ''}
+              </div>
             </div>
             <div class="bento-body">
               ${decoratedAct ? `<div class="bento-activity">${decoratedAct}</div>` : ''}
@@ -10458,7 +10777,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       html += `
         <div class="itinerary-end-card">
           <div style="font-size:1.3rem;margin-bottom:3px;">🏁</div>
-          <div style="font-weight:800;font-size:0.86rem;color:#1e293b;">Day ${day.day_num} 全部便当盒行程已阅览完毕</div>
+          <div style="font-weight:800;font-size:0.86rem;color:#1e293b;">Day ${day.day_num} 全部行程任务已阅览完毕</div>
           <div style="font-size:0.75rem;color:#64748b;margin-top:2px;">点击上方日期胶囊可无缝切换至下一日</div>
         </div>
       `;
@@ -10804,6 +11123,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
       // Highlight the clicked pill
       document.querySelectorAll('.place-pill-btn').forEach(b => b.classList.remove('active-focused'));
       document.querySelectorAll('.pill-place-' + placeId).forEach(b => b.classList.add('active-focused'));
+
+      // Auto-open matching bento card for this place so its details expand
+      const matchedPill = document.querySelector(`.bento-box-card [onclick*="focusMapPlace(${placeId})"]`);
+      if (matchedPill) {
+        const parentCard = matchedPill.closest('.bento-box-card');
+        if (parentCard) {
+          parentCard.classList.add('is-open');
+          parentCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (typeof syncToggleAllBtnState === 'function') syncToggleAllBtnState();
+        }
+      }
 
       setTimeout(() => {
         map.setView([p.lat, p.lng], 16, { animate: true });
