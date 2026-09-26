@@ -2773,6 +2773,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .custom-marker-pill.cat-landmark { border-color: rgba(56, 189, 248, 0.7); }
     .custom-marker-pill.cat-landmark .pill-icon-bubble { background: linear-gradient(135deg, #38bdf8, #2563eb); }
 
+    
+    .custom-marker-pill.cat-apple { border-color: rgba(148, 163, 184, 0.85); box-shadow: 0 3px 14px rgba(0,0,0,0.45); }
+    .custom-marker-pill.cat-apple .pill-icon-bubble { background: linear-gradient(135deg, #1e293b, #090d16); border: 1px solid rgba(255,255,255,0.25); }
     .custom-marker-pill.cat-shopping { border-color: rgba(244, 114, 182, 0.7); }
     .custom-marker-pill.cat-shopping .pill-icon-bubble { background: linear-gradient(135deg, #f472b6, #db2777); }
 
@@ -3181,7 +3184,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
       </div>
       <div class="header-meta">
         <span>📅 2026/10/02 - 10/12 (11天)</span>
-        <span>📍 收藏地点 <strong>233 处</strong> (0 异常)</span>
+        <span>📍 收藏地点 <strong>293 处</strong> (0 异常)</span>
       </div>
       <div class="header-actions">
         <!-- <button class="btn-pwa-install" onclick="openPwaModal()">
@@ -3289,10 +3292,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <div class="split-map-panel">
         <!-- Floating Toolbar on Map -->
         <div class="map-top-bar">
-          <!-- View Mode: Day Route vs All 233 Places -->
+          <!-- View Mode: Day Route vs All 293 Places -->
           <div class="map-mode-toggle">
             <button class="btn-toggle active" id="btnModeDay" onclick="setMapMode('day')">📅 当日</button>
-            <button class="btn-toggle" id="btnModeAll" onclick="setMapMode('all')">🌐 全量233</button>
+            <button class="btn-toggle" id="btnModeAll" onclick="setMapMode('all')">🌐 全量293</button>
           </div>
 
           <!-- City Switch -->
@@ -3305,6 +3308,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <!-- Category Dropdown Filter -->
           <select class="filter-cat-select" id="mapCatSelect" onchange="onMapCatChange()">
             <option value="all">📂 全部分类</option>
+            <option value="apple">🍎 苹果官方直营店 (NYC 12家全收录)</option>
             <option value="hotel">🏨 住宿</option>
             <option value="dining">🍽️ 美食咖啡</option>
             <option value="landmark">🗽 经典地标</option>
@@ -3317,7 +3321,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
           <!-- Search Input -->
           <div class="search-input-wrap">
-            <input type="text" class="map-search-input" id="mapSearchInput" placeholder="搜地点/美食..." oninput="onMapSearchInput()">
+            <input type="text" class="map-search-input" id="mapSearchInput" placeholder="搜地点/美食/苹果店..." oninput="onMapSearchInput()">
             <span class="search-clear-btn" id="searchClearBtn" onclick="clearMapSearch()">×</span>
           </div>
 
@@ -3556,7 +3560,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
             <ol style="margin:6px 0 0 18px;color:#1e40af;">
               <li style='margin-top:4px;'><strong>Jane's Carousel 旋转木马</strong>：秋季开放时间为周四至周日，周一在透明玻璃亭外观景拍照，打卡布鲁克林大桥经典框景。</li>
               <li style='margin-top:4px;'><strong>10/10 跨城交通指引</strong>：弘大延南洞游览完毕后，搭乘地铁 2 号线转 3 号线直达江南狎鸥亭，车程约 40 分钟。</li>
-              <li style='margin-top:4px;'><strong>10/12 圣水洞探店与行李</strong>：部分个性小众买手店周一可能轮休，出发前建议通过 Naver Map 确认营业时间；行李统一寄存于九树酒店前台。</li>
+              <li style='margin-top:4px;'><strong>10/12 圣水洞探店与行李</strong>：部分个性小众买手店周一可能轮休，出发前建议通过 Naver Map 确认营业时间；行李统一寄存于 Momento 旅舍前台。</li>
             </ol>
           </div>
         </div>
@@ -3590,11 +3594,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
             <div class="card-title">🇰🇷 首尔住宿详情</div>
           </div>
           <div class="card-body" style="font-size:0.86rem;line-height:1.6;">
-            <h3 style="color:#0f766e;font-size:0.95rem;margin-bottom:6px;">Nine Tree Premier Hotel Insadong (首尔九树仁寺洞精品酒店)</h3>
-            <p>📍 <strong>详细地址</strong>：49 Insadong-gil, Jongno-gu, Seoul (钟路区仁寺洞街49)</p>
-            <p>🏨 <strong>位置优势</strong>：仁寺洞核心文化商圈，下楼即是特色街区；步行轻松漫步至安国站、北村与清溪川；高品质国际化精品酒店，环境静谧舒适。</p>
-            <p>🚇 <strong>交通接驳</strong>：紧邻地铁 3 号线「安国站」6号口（步行约 3 分钟），步行 6 分钟即达 1/3/5 号线「钟路3街站」，四通八达。</p>
-            <p>🛒 <strong>周边配套</strong>：周边咖啡名店、潮流买手店云集，下楼即有便利店与 Olive Young，前台提供免费行李寄存服务。</p>
+            <h3 style="color:#0f766e;font-size:0.95rem;margin-bottom:6px;">Momento Hostel (首尔钟路莫门托青年旅馆)</h3>
+            <p>📍 <strong>详细地址</strong>：52 Samil-daero 17-gil, Jongno District, Seoul, 韩国 (首尔特别市钟路区三一大路17街52)</p>
+            <p>🏨 <strong>位置优势</strong>：位于钟路繁华核心商圈与清溪川畔，下楼即是钟路美食街与清溪川步道；向南步行 3 分钟跨过清溪川即达乙支路与明洞商圈，地理位置极佳。</p>
+            <p>🚇 <strong>交通接驳</strong>：紧邻地铁 1 号线「钟阁站」4/12 号出口（步行约 3 分钟），步行 6 分钟可达 2 号线「乙支路入口站」及 1/3/5 号线「钟路3街站」，出行极度便捷。</p>
+            <p>🛒 <strong>周边配套</strong>：周边咖啡名店、便利店、炸鸡烤肉美食云集，步行至清溪川夜步仅需 1 分钟，前台提供免费行李寄存服务。</p>
           </div>
         </div>
       </div>
@@ -3628,7 +3632,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           </div>
           <div style="margin-top:12px;background:#eff6ff;border-left:4px solid #2563eb;padding:10px 12px;border-radius:8px;">
             <strong style="color:#1e40af;">🧳 10/12 返程动线与行李寄存指引</strong>
-            <p style="margin-top:5px;color:#1e40af;">09:00 退房后将行李<strong>寄存于九树酒店前台</strong>，搭乘地铁前往圣水洞全天尽情探索，逛至约 17:00。17:15 乘坐地铁返回九树酒店提取行李，18:15 前往首尔站搭乘 AREX 直通列车，<strong>19:20 顺利抵达仁川 T1 航站楼</strong> —— 距 22:30 登机起飞预留超过 3 小时，悠闲从容。</p>
+            <p style="margin-top:5px;color:#1e40af;">09:00 退房后将行李<strong>寄存于 Momento 旅舍前台</strong>，搭乘地铁前往圣水洞全天尽情探索，逛至约 17:00。17:15 乘坐地铁返回 Momento 旅舍提取行李，18:15 前往首尔站搭乘 AREX 直通列车，<strong>19:20 顺利抵达仁川 T1 航站楼</strong> —— 距 22:30 登机起飞预留超过 3 小时，悠闲从容。</p>
           </div>
         </div>
       </div>
@@ -5991,15 +5995,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   {
     "id": 175,
     "city": "首尔 (Seoul)",
-    "district": "明洞 & 乙支路 (Myeongdong / Euljiro)",
-    "title": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞精品酒店)",
+    "district": "钟路 & 清溪川 (Jongno / Cheonggyecheon)",
+    "title": "Momento Hostel (首尔钟路莫门托青年旅馆)",
     "category": "酒店与旅行住宿",
     "cat_key": "hotel",
     "icon": "🏨",
-    "note": "49 Insadong-gil, Jongno-gu, Seoul。仁寺洞核心文化街区，安国站 6 号口步行 3 分钟，双地铁直通。",
-    "lat": 37.5746,
+    "note": "52 Samil-daero 17-gil, Jongno District, Seoul, 韩国。钟路核心清溪川畔，近钟阁站 4/12 号口，步行 3 分钟即达清溪川与乙支路。",
+    "lat": 37.5684,
     "lng": 126.9856,
-    "url": "https://www.google.com/maps/search/Nine+Tree+Premier+Hotel+Insadong"
+    "url": "https://www.google.com/maps/search/Momento+Hostel+Jongno"
   },
   {
     "id": 176,
@@ -6238,15 +6242,15 @@ svg.leaflet-image-layer.leaflet-interactive path {
   {
     "id": 194,
     "city": "首尔 (Seoul)",
-    "district": "明洞 & 乙支路 (Myeongdong / Euljiro)",
-    "title": "Nine Tree Premier Hotel Insadong",
+    "district": "钟路 & 清溪川 (Jongno / Cheonggyecheon)",
+    "title": "Momento Hostel",
     "category": "酒店与旅行住宿",
     "cat_key": "hotel",
     "icon": "🏨",
-    "note": "仁寺洞九树精品酒店",
-    "lat": 37.5746,
+    "note": "52 Samil-daero 17-gil, Jongno District, Seoul, 韩国",
+    "lat": 37.5684,
     "lng": 126.9856,
-    "url": "https://www.google.com/maps/search/Nine+Tree+Premier+Hotel+Insadong"
+    "url": "https://www.google.com/maps/search/Momento+Hostel+Jongno"
   },
   {
     "id": 195,
@@ -7378,6 +7382,162 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "lat": 37.5452,
     "lng": 127.0541,
     "url": "https://www.google.com/maps/search/?api=1&query=Jayeondo+Salt+Bread+Seongsu"
+  },
+  {
+    "id": 282,
+    "city": "纽约 (New York)",
+    "district": "中城核心 (Midtown / Central Park South)",
+    "title": "Apple Fifth Avenue (第五大道 24小时玻璃魔方旗舰店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 全球最著名 Apple 旗舰总店！32英尺标志性发光巨型玻璃魔方入口，地下采光天窗与旋转楼梯，全球唯一 24/7 全年无休 24 小时营业。 地址: 767 Fifth Avenue, New York, NY 10153 · 电话: (212) 336-1440",
+    "lat": 40.7638,
+    "lng": -73.9729,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Fifth+Avenue+New+York"
+  },
+  {
+    "id": 283,
+    "city": "纽约 (New York)",
+    "district": "中城核心 (Midtown East)",
+    "title": "Apple Grand Central (大中央车站古典大厅店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 镶嵌于百年纽约大中央车站范德比尔特大厅（Vanderbilt Hall）东侧阳台，俯瞰整个中央车站人潮涌动的大理石巨厅与星空穹顶。 地址: 45 Grand Central Terminal, New York, NY 10017 · 电话: (212) 284-1800",
+    "lat": 40.7527,
+    "lng": -73.9772,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Grand+Central+New+York"
+  },
+  {
+    "id": 284,
+    "city": "纽约 (New York)",
+    "district": "SoHo 潮流街区 (SoHo)",
+    "title": "Apple SoHo (苏豪铸铁历史建筑首家店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 纽约历史上第一家 Apple Store（2002年开业）！由 1920 年代邮局旧址铸铁建筑改造，标志性通透玻璃天桥与两层艺术空间。 地址: 103 Prince Street, New York, NY 10012 · 电话: (212) 226-3126",
+    "lat": 40.7252,
+    "lng": -73.9989,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+SoHo+New+York"
+  },
+  {
+    "id": 285,
+    "city": "纽约 (New York)",
+    "district": "金融区 (Financial District / WTC)",
+    "title": "Apple World Trade Center (世贸中心 Oculus 飞鸟穹顶店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 位于圣地亚哥·卡拉特拉瓦设计的 Oculus「飞鸟」纯白建筑内部，上下双层开放式弧形设计，与巨型白色肋骨穹顶完美融合。 地址: 185 Greenwich Street, New York, NY 10007 · 电话: (646) 802-3800",
+    "lat": 40.7115,
+    "lng": -74.0116,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+World+Trade+Center+New+York"
+  },
+  {
+    "id": 286,
+    "city": "纽约 (New York)",
+    "district": "切尔西与西村 (Meatpacking / Chelsea)",
+    "title": "Apple West 14th Street (西14街 / 肉类加工区旗舰店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 坐落于肉类加工区与高线公园起点交汇处，三层红砖工业历史建筑，螺旋玻璃中庭，顶层设有大型 Today at Apple 互动体验区。 地址: 401 W 14th Street, New York, NY 10014 · 电话: (212) 444-3400",
+    "lat": 40.741,
+    "lng": -74.0055,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+West+14th+Street+New+York"
+  },
+  {
+    "id": 287,
+    "city": "纽约 (New York)",
+    "district": "上东区 (Upper East Side)",
+    "title": "Apple Upper East Side (上东区百年银行金库艺术店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 由 1922 年美国抵押与信托银行大理石大楼改造，完美复原复古黄铜吊灯、古典大理石壁柱与地下原版重型银行金库。 地址: 940 Madison Avenue, New York, NY 10021 · 电话: (646) 343-2700",
+    "lat": 40.7725,
+    "lng": -73.9635,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Upper+East+Side+New+York"
+  },
+  {
+    "id": 288,
+    "city": "纽约 (New York)",
+    "district": "上西区 (Upper West Side)",
+    "title": "Apple Upper West Side (上西区林肯中心全景玻璃幕墙店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 紧邻林肯中心艺术区，超震撼的巨大弧形透明玻璃屋顶与挑高玻璃幕墙，自然采光极佳，地下层为宏大服务中心。 地址: 1981 Broadway, New York, NY 10023 · 电话: (212) 209-3400",
+    "lat": 40.7744,
+    "lng": -73.9818,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Upper+West+Side+New+York"
+  },
+  {
+    "id": 289,
+    "city": "纽约 (New York)",
+    "district": "布鲁克林威廉斯堡 (Williamsburg)",
+    "title": "Apple Williamsburg (威廉斯堡布鲁克林先锋店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 极具布鲁克林文艺复古调性的 Apple Store！保留裸露红砖墙、拱形大窗、黑化冷轧钢与定制吊灯，与街区潮流文化融为一体。 地址: 247 Bedford Avenue, Brooklyn, NY 11211 · 电话: (929) 397-2740",
+    "lat": 40.7169,
+    "lng": -73.9582,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Williamsburg+New+York"
+  },
+  {
+    "id": 290,
+    "city": "纽约 (New York)",
+    "district": "布鲁克林 (Downtown Brooklyn)",
+    "title": "Apple Downtown Brooklyn (布鲁克林市中心旗舰店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 正对巴克莱中心（Barclays Center），锐角三角形全景玻璃立面与温暖天然木质天花板，充满现代都会活力感。 地址: 123 Flatbush Avenue, Brooklyn, NY 11217 · 电话: (718) 637-6200",
+    "lat": 40.686,
+    "lng": -73.9782,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Downtown+Brooklyn+New+York"
+  },
+  {
+    "id": 291,
+    "city": "纽约 (New York)",
+    "district": "皇后区 (Queens)",
+    "title": "Apple Queens Center (皇后区购物中心店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 皇后区最大购物中心 Queens Center 2 楼核心店，周边多元文化交汇，交通便利。 地址: 90-15 Queens Boulevard, Elmhurst, NY 11373 · 电话: (718) 489-1540",
+    "lat": 40.7335,
+    "lng": -73.8703,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Queens+Center+New+York"
+  },
+  {
+    "id": 292,
+    "city": "纽约 (New York)",
+    "district": "布朗克斯 (Bronx)",
+    "title": "Apple The Mall at Bay Plaza (布朗克斯湾区广场店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 布朗克斯区最大综合购物中心 The Mall at Bay Plaza 1 层官方体验店。 地址: 200 Baychester Avenue, Bronx, NY 10475 · 电话: (718) 530-7760",
+    "lat": 40.865,
+    "lng": -73.829,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+The+Mall+at+Bay+Plaza+New+York"
+  },
+  {
+    "id": 293,
+    "city": "纽约 (New York)",
+    "district": "史泰登岛 (Staten Island)",
+    "title": "Apple Staten Island (史泰登岛购物中心店)",
+    "category": "时尚购物与数码旗舰",
+    "cat_key": "apple",
+    "icon": "🍎",
+    "note": "🍎 史泰登岛 Staten Island Mall 1 层官方直营店。 地址: 2655 Richmond Avenue, Staten Island, NY 10314 · 电话: (718) 568-2230",
+    "lat": 40.5828,
+    "lng": -74.1685,
+    "url": "https://www.google.com/maps/search/?api=1&query=Apple+Staten+Island+New+York"
   }
 ];
     const ITINERARY_DAYS = [
@@ -7574,7 +7734,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       126,
       237,
       58,
-      127
+      127,
+      282,
+      283
     ],
     "blocks": [
       {
@@ -7828,7 +7990,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       240,
       132,
       116,
-      241
+      241,
+      286,
+      285
     ]
   },
   {
@@ -7925,7 +8089,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
       30,
       33,
       15,
-      95
+      95,
+      284,
+      289
     ]
   },
   {
@@ -7981,8 +8147,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "date": "10/08 (周四)",
     "city_tag": "首尔 (SEL)",
     "city_code": "sel",
-    "theme": "抵达仁川机场 T2 ➔ AREX 直通列车 ➔ 九树酒店入住 ➔ 乙支路深夜第一餐 ➔ 清溪川夜步",
-    "hotel": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)",
+    "theme": "抵达仁川机场 T2 ➔ AREX 直通列车 ➔ Momento 旅舍入住 ➔ 乙支路深夜第一餐 ➔ 清溪川夜步",
+    "hotel": "Momento Hostel (52 Samil-daero 17-gil, Jongno District)",
     "hotel_id": 175,
     "sun": "首尔日落 18:03 ｜ 🇰🇷 韩国落地首夜：快捷出关，直通首尔核心，品尝地道深夜排骨汤与烤肉",
     "place_ids": [
@@ -8012,12 +8178,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
       },
       {
         "time": "19:30",
-        "place": "九树顶级酒店仁寺洞店 (Nine Tree Premier Hotel)",
+        "place": "Momento Hostel (旅舍入住与行李安顿)",
         "place_id": 175,
-        "activity": "抵达九树仁寺洞酒店办理入住并安顿行李。酒店地理位置绝佳，下楼即是仁寺洞人人商场与安国胡同，向南步行 5 分钟直达清溪川与钟路商圈。",
+        "activity": "抵达 Momento Hostel (钟路区三一大路17街52) 办理入住并安顿行李。旅舍位于钟路/清溪川繁华核心区，交通极为便利，向南步行 3 分钟即可跨过清溪川直达乙支路与明洞商圈。",
         "booking": "凭护照在前台办理入住手续",
         "time_period": "19:30",
-        "title": "九树顶级酒店仁寺洞店 (Nine Tree Premier Hotel)"
+        "title": "Momento Hostel (旅舍入住与行李安顿)",
+        "transport": "🚶 从首尔站乘地铁 1 号线至钟阁站步行 3 分钟即达，或打车约 10 分钟"
       },
       {
         "time": "20:30",
@@ -8025,7 +8192,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": 180,
         "activity": "步行穿过清溪川来到充满复古烟火气的乙支路（Hipjiro），品尝首尔本地人排队的传奇炭火烤辣排骨与浓郁土豆脊骨汤！",
         "dining": "🍲 必吃美味：炭火烤辣脊骨 (Spicy Grilled Pork Bones)、浓郁骨汤土豆排骨汤、最后加炒饭 (Bokkeumbap)",
-        "transport": "🚶 从九树酒店向南步行 8 分钟跨过清溪川即达乙支路美食街",
+        "transport": "🚶 从 Momento 旅舍向南步行 4 分钟跨过清溪川即达乙支路美食街",
         "time_period": "20:30",
         "title": "新东宫炭火脊骨汤 (乙支路店) / 乙支路啤酒街"
       },
@@ -8034,7 +8201,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place": "清溪川 (Cheonggyecheon) 静谧夜步 ➔ 回酒店",
         "place_id": 186,
         "activity": "餐后漫步于清溪川沿岸石板步道。初秋夜风轻拂，水声潺潺，两岸树影与都市霓虹倒影交相辉映，散步回酒店享受安静舒适的睡眠。",
-        "transport": "🚶 沿清溪川步道漫步 5 分钟返回酒店",
+        "transport": "🚶 从清溪川漫步 2 分钟即轻松返回 Momento 旅舍",
         "time_period": "22:00",
         "title": "清溪川 (Cheonggyecheon) 静谧夜步 ➔ 回酒店"
       }
@@ -8046,7 +8213,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "city_tag": "首尔 (SEL)",
     "city_code": "sel",
     "theme": "德寿宫/市政厅外貌 ➔ 乐天百货(星光大道/GM/9F女装) ➔ Coin Cafe/Acorn画像/Emis/Rockfish/nyunyu/Fun Road ➔ 江南狎鸥亭(Tamburins Jennie墙/Vivaia/Woody zip/empty/kasina/Human made/Worksout/mooni/kossette) ➔ 新沙(Tamburins/ADER error) ➔ 元祖马山酱蟹 ➔ 盘浦汉江公园喷泉",
-    "hotel": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)",
+    "hotel": "Momento Hostel (52 Samil-daero 17-gil, Jongno District)",
     "hotel_id": 175,
     "sun": "首尔日落 18:01 ｜ 🛍️ 首尔第一天：明洞核心扫货 + 跨江江南(狎鸥亭&新沙) + 盘浦汉江公园彩虹喷泉水舞",
     "place_ids": [
@@ -8081,7 +8248,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place": "德寿宫大汉门 & 市政厅外貌巡礼",
         "place_id": 218,
         "activity": "清晨向南漫步来到德寿宫前广场。打卡大汉门宏伟宫门与被誉为首尔最浪漫散步道的贞洞石墙路外貌；移步对街欣赏首尔新旧市政厅交相辉映的波浪流线玻璃建筑与古典石砌老建筑。",
-        "transport": "🚶 从九树酒店向南步行 10 分钟跨过清溪川即达市厅广场",
+        "transport": "🚶 从 Momento 旅舍向西步行约 10 分钟跨过市厅广场即达德寿宫大汉门",
         "tips": "清晨人流稀少，石墙路两侧秋叶金黄，是拍摄无杂质街景的黄金时段。",
         "time_period": "09:15",
         "title": "德寿宫大汉门 & 市政厅外貌巡礼"
@@ -8151,12 +8318,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       },
       {
         "time": "21:15",
-        "place": "返回九树仁寺洞酒店休整",
+        "place": "返回 Momento 旅舍休整",
         "place_id": 175,
-        "activity": "从盘浦汉江公园搭乘出租车或地铁穿过汉江大桥返回中区九树酒店，卸下战利品，享受热水澡，安然休息。",
-        "transport": "🚕 打车返回九树仁寺洞酒店（约 20 分钟，约 12,000 韩元）",
+        "activity": "从盘浦汉江公园搭乘出租车或地铁穿过汉江大桥返回钟路 Momento 旅舍，卸下战利品，享受热水澡，安然休息。",
+        "transport": "🚕 打车返回 Momento 旅舍（约 20 分钟，约 12,000 韩元）",
         "time_period": "21:15",
-        "title": "返回九树仁寺洞酒店休整"
+        "title": "返回 Momento 旅舍休整"
       }
     ]
   },
@@ -8166,7 +8333,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "city_tag": "首尔 (SEL)",
     "city_code": "sel",
     "theme": "Leeum三星美术馆 ➔ 汉南洞先锋买手(Hince/Glowny/R&R/anoetic) ➔ 韩国部队锅午餐 ➔ open yy/Elborn ➔ Passion 5下午茶 ➔ 梨泰院解放村Urban Cliff日落 ➔ 新兴市场小吃 ➔ 108阶梯",
-    "hotel": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)",
+    "hotel": "Momento Hostel (52 Samil-daero 17-gil, Jongno District)",
     "hotel_id": 175,
     "sun": "首尔日落 17:59 ｜ 🎨 首尔第二天：汉南洞美学漫步(Leeum美术馆&先锋买手&部队锅) + 梨泰院解放村Urban Cliff绝美落日",
     "place_ids": [
@@ -8242,12 +8409,12 @@ svg.leaflet-image-layer.leaflet-interactive path {
       },
       {
         "time": "20:00",
-        "place": "返回九树仁寺洞酒店休整",
+        "place": "返回 Momento 旅舍休整",
         "place_id": 175,
-        "activity": "打车或乘地铁轻松返回仁寺洞九树酒店，在大堂整理白天的战利品，放松双腿，舒心就寝备战明日江南之行。",
-        "transport": "🚕 从解放村打车返回九树酒店（约 15 分钟，约 10,000 韩元），或乘绿巴士转地铁",
+        "activity": "打车或乘地铁轻松返回钟路 Momento 旅舍，在大堂整理白天的战利品，放松双腿，舒心就寝。",
+        "transport": "🚕 从解放村打车返回 Momento 旅舍（约 15 分钟，约 10,000 韩元）",
         "time_period": "20:00",
-        "title": "返回九树仁寺洞酒店休整"
+        "title": "返回 Momento 旅舍休整"
       }
     ]
   },
@@ -8257,7 +8424,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "city_tag": "首尔 (SEL)",
     "city_code": "sel",
     "theme": "London Bagel取号 ➔ 北村韩屋晨拍 ➔ Caffe del cotone ➔ Le Labo韩屋店/Tout Y Est ➔ 景福宫 ➔ 土俗村参鸡汤 ➔ 西村慢步(ofr/little tempo/one more bag/regins) ➔ 下午茶(PHAL/Camel/Namusae) ➔ 晚餐(神洞宫/两门烤肉/武桥洞明太鱼)",
-    "hotel": "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)",
+    "hotel": "Momento Hostel (52 Samil-daero 17-gil, Jongno District)",
     "hotel_id": 175,
     "sun": "首尔日落 17:58 ｜ 🏯 古韵慢生活日：清晨避开人潮取号晨拍，历史宫殿与西村独立文艺街区慢度周日",
     "place_ids": [
@@ -8287,7 +8454,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "place_id": 188,
         "activity": "清晨从酒店轻松步行至安国店。08:00 准时在门前现场平板扫码取号（CatchTable 等位系统），锁定心仪的葱花奶油芝士贝果与松露贝果。取号后完全无需原地干等，从容开启清幽人少的北村晨拍！",
         "booking": "当天 08:00 到店平板取号，候补期间游览北村与景福宫，时间丝毫不浪费",
-        "transport": "🚶 从九树酒店向北步行仅 5 分钟直达安国店",
+        "transport": "🚶 从 Momento 旅舍向北步行约 15 分钟（或地铁 3 号线至安国站）直达 London Bagel Museum",
         "tips": "周日早晨 08:00 取号排号靠前，通常在 09:30-10:00 即可入座或打包外带。",
         "time_period": "08:00",
         "title": "London Bagel Museum (安国店抢先取号)"
@@ -8362,7 +8529,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         "activity": "根据手绘图推荐，在酒店周边享用首尔经典老字号晚餐：\n• 选项一 (首推)：Sindonggung 神洞宫 (乙支路店) 炭烤辣脊骨与浓郁土豆排骨汤；\n• 选项二：两门烤肉 (남영동양문) 炭火鲜烤特大排骨配特制水冷面；\n• 选项三：武桥洞干明太鱼汤 (Mugyodong Bugeokukjib) 醇浓解腻传统暖汤饭；\n• 选项四：元祖马山辣炖安康鱼。\n餐后漫步清溪川夜步，返回酒店整理行装。",
         "dining": "🍲 首推美味：神洞宫炭火烤辣排骨 (Spicy Pork Bone BBQ) + 浓白骨汤",
         "transport": "🚶 从西村步行或乘出租车 5-8 分钟返回钟路/乙支路美食商圈",
-        "tips": "四家店都在九树酒店步行 5-10 分钟范围内，吃完散步回酒店极度省心无负担。",
+        "tips": "💡 四家店距 Momento 旅舍步行均在 5-10 分钟范围内，吃完散步回旅舍极度省心无负担。",
         "time_period": "18:00",
         "title": "晚餐经典四选一：神洞宫土豆脊骨汤 / 两门烤肉 / 武桥洞干明太鱼汤 / 元祖马山安康鱼"
       }
@@ -8440,19 +8607,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
       },
       {
         "time": "16:30",
-        "place": "返回九树仁寺洞酒店提取寄存行李",
+        "place": "返回 Momento 旅舍提取寄存行李",
         "place_id": 175,
-        "activity": "搭乘出租车或地铁返回仁寺洞九树酒店，前台提取上午寄存的行李箱，在大堂将圣水洞战利品与伴手礼从容打包归纳整齐。",
-        "transport": "🚕 圣水洞打车返回九树酒店（车程约 18 分钟，约 12,000 韩元），省心快捷",
+        "activity": "搭乘出租车或地铁返回钟路 Momento 旅舍，前台提取上午寄存的行李箱，从容打包归纳整齐。",
+        "transport": "🚕 圣水洞打车返回 Momento 旅舍（车程约 18 分钟，约 12,000 韩元），省心快捷",
         "time_period": "16:30",
-        "title": "返回九树仁寺洞酒店提取寄存行李"
+        "title": "返回 Momento 旅舍提取寄存行李"
       },
       {
         "time": "17:30",
         "place": "首尔站搭乘 AREX 直通特急 ➔ 仁川机场 T1 / 离境返程",
         "place_id": 214,
         "activity": "前往首尔站搭乘 AREX 机场直通特急列车，一站直达仁川国际机场第一航站楼（T1，用时仅 43 分钟，避开晚高峰地面塞车）。在机场自助退税机退税，办理航班值机与托运，步入 Sky Hub 贵宾休息室休整，搭乘国际航班平安圆满归家！",
-        "transport": "🚆 AREX 机场特急直通列车（直达 T1 约 43 分钟）",
+        "transport": "🚇 从 Momento 旅舍步行至钟阁站乘地铁 1 号线直达首尔站（仅 2 站约 6 分钟），或打车约 10 分钟",
         "tips": "AREX 直通特急准时高效；提前在 T1 28 号登机口附近领取退税现金。",
         "time_period": "17:30",
         "title": "首尔站搭乘 AREX 直通特急 ➔ 仁川机场 T1 / 离境返程"
@@ -8792,22 +8959,25 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "Incheon Airport"
   ],
   "175": [
-    "Nine Tree Premier Hotel Insadong (首尔九树仁寺洞)",
-    "Nine Tree Premier Hotel Insadong",
-    "Nine Tree Premier Hotel",
-    "九树顶级酒店仁寺洞店 (Nine Tree Premier Hotel)",
-    "九树仁寺洞精品酒店",
-    "九树酒店",
-    "首尔九树仁寺洞",
-    "漫步返回九树酒店休整",
-    "返回九树酒店休整",
-    "返回九树酒店提取寄存行李"
+    "Momento Hostel",
+    "Momento Hostel (首尔钟路莫门托青年旅馆)",
+    "Momento Hostel Jongno",
+    "Momento",
+    "首尔莫门托青旅",
+    "莫门托青旅",
+    "Momento Hostel (旅舍入住与行李安顿)",
+    "返回 Momento 旅舍休整",
+    "返回 Momento 旅舍提取寄存行李",
+    "Momento 旅舍",
+    "返回Momento旅舍休整",
+    "返回Momento旅舍提取寄存行李"
   ],
   "194": [
-    "Nine Tree Premier Hotel Insadong",
-    "九树酒店",
-    "Nine Tree",
-    "首尔九树仁寺洞"
+    "Momento Hostel",
+    "Momento Hostel Jongno",
+    "莫门托青旅",
+    "Momento",
+    "Momento 旅舍"
   ],
   "186": [
     "清溪川",
@@ -9525,6 +9695,156 @@ svg.leaflet-image-layer.leaflet-interactive path {
     "Jayeondo",
     "盐面包",
     "自然岛盐面包"
+  ],
+  "282": [
+    "Apple Fifth Avenue",
+    "Fifth Avenue Apple Store",
+    "第五大道苹果店",
+    "第五大道苹果",
+    "苹果第五大道店",
+    "苹果玻璃魔方",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "767 5th Ave",
+    "Apple"
+  ],
+  "283": [
+    "Apple Grand Central",
+    "Grand Central Apple Store",
+    "大中央车站苹果店",
+    "中央车站苹果店",
+    "中央车站苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "Grand Central Terminal",
+    "Apple"
+  ],
+  "284": [
+    "Apple SoHo",
+    "SoHo Apple Store",
+    "苏豪区苹果店",
+    "SoHo苹果店",
+    "苏豪苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "103 Prince St",
+    "Apple"
+  ],
+  "285": [
+    "Apple World Trade Center",
+    "Apple WTC",
+    "Oculus Apple Store",
+    "世贸中心苹果店",
+    "世贸苹果店",
+    "Oculus苹果店",
+    "世贸苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "185 Greenwich St",
+    "Apple"
+  ],
+  "286": [
+    "Apple West 14th Street",
+    "Apple 14th St",
+    "Meatpacking Apple Store",
+    "西14街苹果店",
+    "肉类加工区苹果店",
+    "高线公园苹果店",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "401 W 14th St",
+    "Apple"
+  ],
+  "287": [
+    "Apple Upper East Side",
+    "Upper East Side Apple Store",
+    "上东区苹果店",
+    "麦迪逊大道苹果店",
+    "上东苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "940 Madison Ave",
+    "Apple"
+  ],
+  "288": [
+    "Apple Upper West Side",
+    "Upper West Side Apple Store",
+    "上西区苹果店",
+    "林肯中心苹果店",
+    "百老汇苹果店",
+    "上西苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "1981 Broadway",
+    "Apple"
+  ],
+  "289": [
+    "Apple Williamsburg",
+    "Williamsburg Apple Store",
+    "威廉斯堡苹果店",
+    "布鲁克林苹果店",
+    "威廉斯堡苹果",
+    "Bedford Ave Apple Store",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "247 Bedford Ave",
+    "Apple"
+  ],
+  "290": [
+    "Apple Downtown Brooklyn",
+    "Downtown Brooklyn Apple Store",
+    "布鲁克林市中心苹果店",
+    "巴克莱中心苹果店",
+    "布鲁克林苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "123 Flatbush Ave",
+    "Apple"
+  ],
+  "291": [
+    "Apple Queens Center",
+    "Queens Center Apple Store",
+    "皇后区苹果店",
+    "Queens苹果店",
+    "皇后区苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "Queens Center",
+    "Apple"
+  ],
+  "292": [
+    "Apple The Mall at Bay Plaza",
+    "Bay Plaza Apple Store",
+    "布朗克斯苹果店",
+    "Bronx Apple Store",
+    "布朗克斯苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "Bay Plaza",
+    "Apple"
+  ],
+  "293": [
+    "Apple Staten Island",
+    "Staten Island Apple Store",
+    "史泰登岛苹果店",
+    "Staten Island Mall Apple Store",
+    "史泰登岛苹果",
+    "Apple Store",
+    "苹果店",
+    "苹果商店",
+    "Staten Island Mall",
+    "Apple"
   ]
 };
     const BOOKINGS = [
@@ -9684,14 +10004,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   },
   {
     "id": 15,
-    "name": "九树酒店前台寄存行李 — 10/12",
+    "name": "Momento 旅舍前台寄存行李 — 10/12",
     "city": "首尔",
     "category": "🧳 行李寄存",
     "priority": "ℹ️ 备忘须知",
     "suggested_lead": "退房时告知前台",
-    "channel": "九树酒店前台",
-    "url": "https://www.ninetreehotels.com",
-    "notes": "周一 11:00 前退房时告知九树酒店前台寄存行李，全天轻装游玩圣水洞，傍晚回酒店取件前往首尔站搭乘 AREX 直通列车。"
+    "channel": "Momento 旅舍前台 (52 Samil-daero 17-gil)",
+    "url": "https://www.google.com/maps/search/Momento+Hostel+Jongno",
+    "notes": "周一 11:00 前退房时告知 Momento 旅舍前台寄存行李，全天轻装游玩圣水洞，傍晚回旅舍取件前往首尔站搭乘 AREX 直通列车。"
   },
   {
     "id": 16,
@@ -10722,6 +11042,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
     function onMapCatChange() {
       currentCat = document.getElementById('mapCatSelect').value;
+      if (currentCat !== 'all' && mapMode === 'day') {
+        setMapMode('all');
+        return;
+      }
       updateMapDisplay();
       fitCurrentMarkers();
     }
@@ -10730,6 +11054,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
       const val = document.getElementById('mapSearchInput').value.trim();
       currentSearch = val.toLowerCase();
       document.getElementById('searchClearBtn').style.display = val ? 'block' : 'none';
+      if (currentSearch && mapMode === 'day') {
+        setMapMode('all');
+        return;
+      }
       updateMapDisplay();
     }
 
@@ -10758,14 +11086,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
         }
         if (currentCat !== 'all') {
           if (currentCat === 'wish' && !p.note) return false;
-          if (currentCat !== 'wish' && p.cat_key !== currentCat) return false;
+          if (currentCat === 'apple' && p.cat_key !== 'apple' && !p.title.includes('Apple')) return false;
+          if (currentCat === 'shopping' && p.cat_key !== 'shopping' && p.cat_key !== 'apple') return false;
+          if (currentCat !== 'wish' && currentCat !== 'apple' && currentCat !== 'shopping' && p.cat_key !== currentCat) return false;
         }
         if (currentSearch) {
           const t = p.title.toLowerCase();
           const d = p.district.toLowerCase();
           const c = p.category.toLowerCase();
           const n = p.note.toLowerCase();
-          if (!t.includes(currentSearch) && !d.includes(currentSearch) && !c.includes(currentSearch) && !n.includes(currentSearch)) {
+          const aliases = (PLACE_ALIASES[p.id] || []).join(' ').toLowerCase();
+          if (!t.includes(currentSearch) && !d.includes(currentSearch) && !c.includes(currentSearch) && !n.includes(currentSearch) && !aliases.includes(currentSearch)) {
             return false;
           }
         }

@@ -1,5 +1,5 @@
 // PWA Service Worker (Git & Offline Support - Stale-While-Revalidate)
-const CACHE_NAME = 'travel-pwa-v2026-v5';
+const CACHE_NAME = 'travel-pwa-v2026-v7';
 const CORE_ASSETS = [
   './',
   './index.html',
